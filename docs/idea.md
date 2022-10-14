@@ -2,7 +2,7 @@
 
 ## Team name: Team Lambda
 
-## Application name: 
+## Application name: Study Buddies
 
 ## Team members: 
 
@@ -22,7 +22,7 @@
 
 ## Study Group Finder
 
-  Match compatible users to an already existing study group which meets at a certain time and location every week. Users in a study group should share at least one common class, but ideally would share more than one. Users in a study group must all be free at the time which the study group meets. Ideally, the meeting would take place between a user's classes (so that they will likely be on campus), and near to where their next class is.
+  Suggests a list of compatible users/groups which meet at a certain time and location every week. Users in a study group should share at least one common class, but ideally would share more than one. Users in a study group must all be free at the time which the study group meets. Ideally, the meeting would take place between a user's classes (so that they will likely be on campus), and near to where their next class is.
 
 ## Study Group Creator
 
