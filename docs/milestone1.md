@@ -46,3 +46,10 @@
 - potentially links user to google calendar
 - maybe embedded calendar
 - maybe apple calendar as well
+
+#Wireframes
+
+## Navigation Bar and Settings Dropdown Menu
+![Navbar wireframe](wireframes/Settings%20Menu.png)
+## Homepage
+![Homepage wireframe](wireframes/Homepage.png)
