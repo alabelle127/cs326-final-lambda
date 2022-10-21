@@ -47,9 +47,15 @@
 - maybe embedded calendar
 - maybe apple calendar as well
 
-#Wireframes
+# Wireframes
 
 ## Navigation Bar and Settings Dropdown Menu
 ![Navbar wireframe](wireframes/Settings%20Menu.png)
+![Account settings wireframe](wireframes/Account%20Settings.png)
 ## Homepage
 ![Homepage wireframe](wireframes/Homepage.png)
+## Register Account
+![Register wireframe](wireframes/Register.png)
+![Register classes wireframe](wireframes/Register%20Classes.png)
+![Class selector wireframe](wireframes/Class%20Selector.png)
+![Create calendar wireframe](wireframes/Create%20Calendar.png)
