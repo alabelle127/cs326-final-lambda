@@ -12,7 +12,10 @@
 
 ## Group page
 
-- 
+- Group name
+- Students in the group
+- Applicable courses 
+- Group description
 
 ## Student page
 
