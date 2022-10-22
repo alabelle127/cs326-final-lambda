@@ -2,7 +2,7 @@
     height: 100vh;
 }
 
-#home-content {
+#content-container-background {
     background-image: url("https://upload.wikimedia.org/wikipedia/commons/a/ac/UMass_Amherst_W.E.B._Dubois_Library_night_2.jpg");
     background-size: cover;
 }
