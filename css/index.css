@@ -1,0 +1,12 @@
+.HomePage {
+  text-align: center;
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+#create-account {
+  background-color: blue;
+  color: white;
+  border-radius: 10px;
+  background-size: 100px auto;
+}
