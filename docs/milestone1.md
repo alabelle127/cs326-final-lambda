@@ -60,4 +60,4 @@
 ![Class selector wireframe](wireframes/Class%20Selector.png)
 ![Create calendar wireframe](wireframes/Create%20Calendar.png)
 ## Student/Group Finder Page
-![Group_Student Finder Page](wireframes/Group_Student Finder Page.drawio.png)
+![Group_Student Finder Page](wireframes/Group_Student%20Finder%20Page.drawio.png)
