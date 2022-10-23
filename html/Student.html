@@ -8,15 +8,58 @@
 		<link rel="stylesheet" type="text/css" href="../css/Student.css"  >
 
 	</head>
-    <header>
-        NavBar go here
-    </header>
 	<body>
+        <!--NAVBAR-->
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <!--Placeholder logo-->
+                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3c662b51418913.58ecfcd8b6b18.png" alt="logo" width="30" height="30"
+                        class="d-inline-block align-text-top">
+                    Study Buddies</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <!--Active item-->
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Find groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Add/remove classes</a>
+                        </li>
+                    </ul>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <!--Placeholder profile picture-->
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png" class="rounded-circle" alt="Profile picture" width="50" height="50">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">View profile</a></li>
+                            <li><a class="dropdown-item" href="./account_settings.html">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Help</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#">Sign out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!--END NAVBAR-->
         <div class="row">
             <div class="column" id="centerize">
                 <table>
                     <tr>
                         <td>
+                            <br>
                             <img class="profilePic"
                             src="../images/defaulProfilePic.png"
                             alt="Profile Pic"
@@ -25,49 +68,53 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="sched">My schedule</button>
+                            <a class="btn btn-primary btn-lg" href="">My Schedule</a>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <br><br><br>
+                            <br><br>
                             Contact Information: <br>
-                            Email: <br>
-                            Phone: 
+                            Email: jdoe@umass.edu<br>
+                            Phone: (123) 456-7890
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <br><br><br>
-                            About Me:
+                            <br><br>
+                            About Me: <br> Pellentesque luctus dui sed ex efficitur, a malesuada ex faucibus. Proin quis leo ornare, ultrices dolor sit amet, egestas libero. Fusce tempor porta tellus, sed ullamcorper tortor eleifend at. Nam cursus vestibulum finibus. Nullam sagittis lacus nunc, eget imperdiet metus dictum sit amet. Vestibulum odio dui, mollis ut laoreet et, ultrices quis augue. In eget est ac urna lacinia venenatis 
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="column">
                 <br><br>
-                <h2>Name: </h2>
-                <h2>John Doe</h2>
+                <h3>Name: </h3>
+                <h3>John Doe</h3>
             </div>
             <div class="column">
                 <br><br>
-                <h2>Previous Courses: </h2>
+                <h3>Previous Courses: </h3>
                 <ul>
-                    <li></li>
+                    <li>CS 111</li>
+                    <li>CS 222</li>
+                    <li>CS 333</li>
                 </ul>
             </div>
             <div class="column">
                 <br><br>
-                <h2>Current Courses:</h2>
+                <h3>Current Courses:</h3>
                 <ul>
-                    <li></li>
+                    <li>CS 444</li>
+                    <li>CS 555</li>
+                    <li>CS 666</li>
                 </ul>
             </div>
             <div class="column">
                 <br><br>
-                <h2>Groups:</h2>
+                <h3>Groups:</h3>
                 <ul>
-                    <li></li>
+                    <li>Example Group 1</li>
                 </ul>
             </div>
           </div>
