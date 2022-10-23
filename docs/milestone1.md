@@ -19,6 +19,7 @@
 ![Create calendar screenshot](screenshots/Create%20Calendar.png)
 ## Student/Group Finder Page
 ![Group_Student Finder Page](wireframes/Group_Student%20Finder%20Page.drawio.png)
+![GroupStudentFinder Page](screenshots/StudentGroupFinder.png)
 ## Group page
 ![Group page wireframe](wireframes/Group.png)
 ![Group page wireframe](screenshots/Group.png)
