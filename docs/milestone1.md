@@ -21,8 +21,10 @@
 ![Group_Student Finder Page](wireframes/Group_Student%20Finder%20Page.drawio.png)
 ## Group page
 ![Group page wireframe](wireframes/Group.png)
+![Group page wireframe](screenshots/Group.png)
 ## Student page
 ![Student page wireframe](wireframes/Student.png)
+![Student page wireframe](screenshots/Student.png)
 
 # Division of Labor
 Gavin:
