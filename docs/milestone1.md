@@ -34,6 +34,7 @@ Gavin:
 - Homepage
 
 Andrew:
+- Group/Student Finder Page
 
 Chris:
 - Group Page
