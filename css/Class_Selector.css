@@ -1,0 +1,5 @@
+.class-list {
+    max-height: 30vh;
+    margin-bottom: 10px;
+    overflow-y: auto;
+}

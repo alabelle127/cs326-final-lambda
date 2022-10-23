@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"
+        defer></script>
+    <link href="./css/homepage.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="page-container" class="d-flex flex-column">
+        <!--NAVBAR-->
+        <nav class="navbar navbar-expand-sm bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./homepage.html">
+                    <!--Placeholder logo-->
+                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3c662b51418913.58ecfcd8b6b18.png" alt="logo"
+                        width="30" height="30" class="d-inline-block align-text-top">
+                    Study Buddies
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./homepage.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Find groups</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Add/remove classes</a>
+                        </li>
+                    </ul>
+                    <div>
+                        <a class="btn btn-outline-primary" href="./register.html">Create account</a>
+                        <a class="btn btn-primary" href="./login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!--END NAVBAR-->
+        <!--BEGIN CONTENT-->
+        <div id="content-container-background"
+            class="d-flex flex-column justify-content-center container-fluid flex-grow-1">
+            <div id="content-container"
+                class="d-flex flex-column align-items-center container-lg border border-dark rounded-3 bg-light">
+                <header class="text-center text-black py-5">
+                    <h1 class="display-2 font-weight-bold mb-0">Login</h1>
+                </header>
+                <form class="w-50 mb-5">
+                    <div class="mb-3">
+                        <label for="input-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="input-username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="input-password">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!--END CONTENT-->
+    </div>
+</body>
+
+</html>
