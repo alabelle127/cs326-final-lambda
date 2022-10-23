@@ -64,3 +64,7 @@
 ![Create calendar wireframe](wireframes/Create%20Calendar.png)
 ## Student/Group Finder Page
 ![Group_Student Finder Page](wireframes/Group_Student%20Finder%20Page.drawio.png)
+## Group page
+![Group page wireframe](wireframes/Group.png)
+## Student page
+![Student page wireframe](wireframes/Student.png)
