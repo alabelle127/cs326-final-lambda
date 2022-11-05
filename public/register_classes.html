@@ -12,6 +12,7 @@
     <link href="./css/class_selector.css" rel="stylesheet">
     <meta name="nav-name" content="Add/remove classes">
     <script src="./js/navbar.js" defer></script>
+    <script src="./js/registerClasses.js" defer></script>
 </head>
 <body>
     <div id="page-container" class="d-flex flex-column">
@@ -26,26 +27,15 @@
                 </header>
                 <h1 class="display-6 mb-1">Classes taken/taking:</h1>
                 <div class="w-50 mb-5">
-                    <ul class="class-list list-group mb-2">
-                        <!--Placeholder data-->
-                        <li class="list-group-item active" aria-current="true">CS 326 (Berger) TuTh 1:00-2:15</li>
-                        <li class="list-group-item">MATH 551 (Johnston) MoWeFr 10:10-11:00</li>
-                        <li class="list-group-item">STAT 515 (Larson) MoWeFr 11:15-12:05</li>
-                        <li class="list-group-item">CS 453 (Not current)</li>
-                        <li class="list-group-item">MATH 471 (Not current)</li>
-                        <li class="list-group-item">CS 466 (Not current)</li>
-                        <li class="list-group-item">CS 446 (Not current)</li>
-                        <li class="list-group-item">CS 311 (Not current)</li>
-                        <li class="list-group-item">CS 377 (Not current)</li>
-                        <li class="list-group-item">CS 383 (Not current)</li>
-                    </ul>
+                    <ul id="class-list" class="class-list list-group mb-2"></ul>
                     <div class="d-flex mb-3">
-                        <button type="button" class="btn btn-danger btn-lg mx-1">Remove class</button>
-                        <button type="button" class="btn btn-success btn-lg flex-grow-1 mx-1" data-bs-toggle="modal" data-bs-target="#class-finder-modal">Add another class</button>
+                        <button id="remove-class-btn" type="button" class="btn btn-danger btn-lg mx-1">Remove class</button>
+                        <button type="button" class="btn btn-success btn-lg flex-grow-1 mx-1" data-bs-toggle="modal"
+                            data-bs-target="#class-finder-modal">Add another class</button>
                     </div>
                     <!--Class finder modal menu-->
-                    <div class="modal fade" id="class-finder-modal" tabindex="-1"
-                        aria-labelledby="class-finder-modal-label" aria-hidden="true">
+                    <div class="modal fade" id="class-finder-modal" tabindex="-1" aria-labelledby="class-finder-modal-label"
+                        aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -54,20 +44,16 @@
                                 </div>
                                 <div class="modal-body">
                                     <form class="d-flex mb-2" role="search">
-                                        <input class="form-control me-2" type="search" placeholder="Enter class ID or subject, course number" aria-label="Search">
-                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                        <input id="class-search-bar" class="form-control me-2" type="search"
+                                            placeholder="Enter class ID or subject, course number" aria-label="Search">
+                                        <button id="class-search-btn" class="btn btn-outline-success" type="button">Search</button>
                                     </form>
-                                    <ul class="class-list list-group mb-2">
-                                        <!--Placeholder data-->
-                                        <li class="list-group-item">CS 326 (Not current)</li>
-                                        <li class="list-group-item active" aria-current="true">CS 326 (Berger) TuTh 1:00-2:15 [44866]</li>
-                                        <li class="list-group-item">CS 326 (Klemperer) TuTh 1:00-2:15 [57113]</li>
-                                        <li class="list-group-item">CHINESE 326 (Gao) TuTh 10:00-11:15</li>
-                                    </ul>
+                                    <ul id="class-search-list" class="class-list list-group mb-2"></ul>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Add this class</button>
+                                    <button id="add-class-btn" type="button" class="btn btn-success" data-bs-dismiss="modal">Add this
+                                        class</button>
                                 </div>
                             </div>
                         </div>

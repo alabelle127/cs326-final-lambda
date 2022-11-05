@@ -149,7 +149,8 @@ async function searchClasses() {
 /**
  * Manage current classes
  */
-const classes = [];
+// TODO: Get current classes if logged in
+window.classes = [];
 const removeClassButton = document.getElementById("remove-class-btn");
 const classListElem = document.getElementById("class-list");
 let selectedClassIndex = undefined;
