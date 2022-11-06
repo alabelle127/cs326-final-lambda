@@ -78,10 +78,12 @@ async function searchClasses() {
   // Update search list with search results
   const query = searchBarElem.value;
   const url = `/api/classes/search?${new URLSearchParams({ q: query })}`;
-  const r = await fetch(url);
-  if (!r.ok) {
-    throw new Error(`Request failed with status ${r.status} - ${r.statusText}`);
-  }
+  const r = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
   const responseData = await r.json();
 
   // Set search results
@@ -110,7 +112,7 @@ removeClassButton.disabled = true;
 
 function addSelectedClass() {
   // Add class selected from class search to current class list
-  // TODO: Don't add if duplicate
+  // TODO: Don't add class if duplicate
   classes.push(selectedSearchClass);
   console.log(selectedSearchClass);
   renderClassList(

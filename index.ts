@@ -1,10 +1,34 @@
 import dotenv from "dotenv";
 import express, { Express } from "express";
+import session from "express-session";
+
+declare module "express-session" {
+  interface SessionData {
+    userID: number | null;
+  }
+}
 
 dotenv.config();
 
 const app: Express = express();
-const port = process.env.PORT;
+const port = process.env.PORT ?? 8080;
+
+if (!process.env.SECRET) {
+  throw new Error("SECRET environment variable not set");
+}
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 3600 * 24 * 7,
+    },
+  })
+);
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve HTML/js/css files
 app.use(express.static("public"));
@@ -69,6 +93,53 @@ app.get("/api/classes/search", (req, res) => {
   ];
   res.json(responseData);
 });
+
+// Login/logout
+app.post("/api/login", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log(
+    `Received API request for login with username=${username}, password=${password}`
+  );
+
+  if (Math.random() < 0.5) {
+    // Authentication failure
+    console.log("Authentication failed");
+    res.status(401).json({
+      success: false,
+      userID: null,
+    });
+  } else {
+    // Authentication success
+    console.log("Authentication successful");
+    req.session.userID = 1001;
+    res.json({
+      success: true,
+      userID: 1001,
+    });
+  }
+});
+
+app.post("/api/logout", (req, res) => {
+  console.log(`Logging out user: ${req.session.userID}`);
+  req.session.userID = null;
+  res.sendStatus(200);
+});
+
+app.get("/api/me", (req, res) => {
+  console.log(`Session requesting userID: ${req.session.id}`);
+  const userID = req.session.userID ?? null;
+  res.json({
+    loggedIn: userID != null,
+    userID: userID,
+  });
+});
+
+// Register
+
+// User
+
+// Group
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);

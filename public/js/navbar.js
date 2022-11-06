@@ -38,7 +38,7 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
     navItemElem.appendChild(navItemLinkElem);
     contentList.appendChild(navItemElem);
   }
-  if (loggedInUserID >= 0) {
+  if (loggedInUserID != null) {
     // TODO: get profile picture from loggedInUserID
     navContentElem.insertAdjacentHTML(
       "beforeend",
@@ -54,10 +54,22 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="#">Sign out</a></li>
+            <li><a id="logout-btn" class="dropdown-item text-danger" href="#">Sign out</a></li>
         </ul>
       </div>`
     );
+    const logoutButtonElem = document.getElementById("logout-btn");
+    logoutButtonElem.addEventListener("click", async () => {
+      const url = "/api/logout";
+      const r = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      window.location.reload();
+    });
   } else {
     navContentElem.insertAdjacentHTML(
       "beforeend",
@@ -69,10 +81,22 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
   }
 }
 
-// TODO: get loggedInUserID from cookie
-const loggedInUserID = 1001;
-const currentPage = document.querySelector('meta[name="nav-name"]').content;
-
-for (const navbarElem of document.getElementsByClassName("navbar")) {
-  generateNavbar(navbarElem, currentPage, loggedInUserID);
+async function getLoggedInUser() {
+  const url = "/api/me";
+  const r = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+  const { loggedIn, userID } = await r.json();
+  return userID;
 }
+
+getLoggedInUser().then((userID) => {
+  const currentPage = document.querySelector('meta[name="nav-name"]').content;
+
+  for (const navbarElem of document.getElementsByClassName("navbar")) {
+    generateNavbar(navbarElem, currentPage, userID);
+  }
+});
