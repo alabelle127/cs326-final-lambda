@@ -1,3 +1,5 @@
+import { getLoggedInUser } from "./getLoggedInUser.js";
+
 function renderClassList(
   listElem,
   classItems,
@@ -103,10 +105,11 @@ async function searchClasses() {
 /**
  * Manage current classes
  */
-// TODO: Get current classes if logged in
+
 window.classes = [];
 const removeClassButton = document.getElementById("remove-class-btn");
 const classListElem = document.getElementById("class-list");
+const saveButtonElem = document.getElementById("save-btn");
 let selectedClassIndex = undefined;
 removeClassButton.disabled = true;
 
@@ -114,7 +117,6 @@ function addSelectedClass() {
   // Add class selected from class search to current class list
   // TODO: Don't add class if duplicate
   classes.push(selectedSearchClass);
-  console.log(selectedSearchClass);
   renderClassList(
     classListElem,
     classes,
@@ -141,17 +143,47 @@ function removeSelectedClass() {
   );
 }
 
-renderClassList(
-  classListElem,
-  classes,
-  "class-item",
-  [removeClassButton],
-  "No classes registered",
-  (i) => {
-    selectedClassIndex = i;
+getLoggedInUser().then(async (userID) => {
+  if (userID != null) {
+    const url = `/api/users/${userID}/registered_classes`;
+    const r = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    classes = (await r.json()).data;
   }
-);
 
-searchButtonElem.addEventListener("click", searchClasses);
-addClassButton.addEventListener("click", addSelectedClass);
-removeClassButton.addEventListener("click", removeSelectedClass);
+  renderClassList(
+    classListElem,
+    classes,
+    "class-item",
+    [removeClassButton],
+    "No classes registered",
+    (i) => {
+      selectedClassIndex = i;
+    }
+  );
+
+  searchButtonElem.addEventListener("click", searchClasses);
+  addClassButton.addEventListener("click", addSelectedClass);
+  removeClassButton.addEventListener("click", removeSelectedClass);
+
+  if (saveButtonElem) {
+    saveButtonElem.addEventListener("click", async () => {
+      const url = `/api/users/${userID}/registered_classes`;
+      const r = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          classes: classes,
+        }),
+      });
+      await r.json();
+    });
+  }
+});

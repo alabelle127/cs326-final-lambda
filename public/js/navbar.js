@@ -1,4 +1,6 @@
-const navbarItems = {
+import { getLoggedInUser } from "./getLoggedInUser.js";
+
+let navbarItems = {
   Home: "./",
   "Find groups": "./StudentGroupFinder.html",
   "Add/remove classes": "./register_classes.html",
@@ -68,6 +70,7 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
           "Content-Type": "application/json",
         },
       });
+      window.sessionStorage.removeItem("userID");
       window.location.reload();
     });
   } else {
@@ -81,19 +84,12 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
   }
 }
 
-async function getLoggedInUser() {
-  const url = "/api/me";
-  const r = await fetch(url, {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-  const { loggedIn, userID } = await r.json();
-  return userID;
-}
-
 getLoggedInUser().then((userID) => {
+  if (userID === null) {
+    navbarItems = {
+      Home: "./",
+    };
+  }
   const currentPage = document.querySelector('meta[name="nav-name"]').content;
 
   for (const navbarElem of document.getElementsByClassName("navbar")) {
