@@ -157,7 +157,7 @@ app.post("/api/register", (req, res) => {
  */
 app.get("/api/users/:userID/registered_classes", (req, res) => {
   console.log(
-    `Receive API request to get registered classes for user ${req.params.userID}, by user ${req.session.userID}`
+    `Received API request to get registered classes for user ${req.params.userID}, by user ${req.session.userID}`
   );
   const userID = parseInt(req.params.userID);
   if (isNaN(userID) || userID <= 0) {
@@ -241,7 +241,7 @@ app.get("/api/users/:userID/registered_classes", (req, res) => {
 app.post("/api/users/:userID/registered_classes", (req, res) => {
   const newClasses = req.body.classes;
   console.log(
-    `Received API request to set registered classes to: ${req.body.classes}`
+    `Received API request to set registered classes to: ${newClasses}`
   );
   const userID = parseInt(req.params.userID);
   if (isNaN(userID) || userID <= 0) {
@@ -265,9 +265,8 @@ app.post("/api/users/:userID/registered_classes", (req, res) => {
   }
 });
 
-/**
- * Group
- */
+// GET /api/users/:userID/compatible_partners - return compatible study partners for user
+// POST /api/users/:userID/create_meeting - create a weekly meeting
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
