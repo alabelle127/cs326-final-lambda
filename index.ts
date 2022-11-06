@@ -143,6 +143,14 @@ app.get("/api/me", (req, res) => {
 /**
  * Register
  */
+app.post("/api/register", (req, res) => {
+  console.log(
+    `Attempting to register new account with ${req.body.classes.length} classes and username: ${req.body.username}`
+  );
+  res.json({
+    success: true,
+  });
+});
 
 /**
  * User

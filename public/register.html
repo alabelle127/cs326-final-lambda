@@ -13,6 +13,7 @@
     <meta name="nav-name" content="Register">
     <script src="./js/navbar.js" type="module" defer></script>
     <script src="./js/registerClasses.js" type="module" defer></script>
+    <script src="./js/registerAccount.js" type="module" defer></script>
 </head>
 
 <body>
@@ -25,22 +26,22 @@
                 <header class="text-center text-black py-5">
                     <h1 class="display-2 font-weight-bold mb-0">Create an account</h1>
                 </header>
-                <form class="w-50 mb-5">
+                <form id="register-form" class="w-50 mb-5">
                     <div class="mb-3">
                         <label for="input-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="input-username">
+                        <input type="text" class="form-control" name="username" id="input-username">
                     </div>
                     <div class="mb-3">
                         <label for="input-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="input-password">
+                        <input type="password" class="form-control" name="password" id="input-password">
                     </div>
                     <div class="mb-3">
                         <label for="input-password-2" class="form-label">Retype password</label>
-                        <input type="password" class="form-control" id="input-password-2">
+                        <input type="password" class="form-control" name="password2" id="input-password-2">
                     </div>
                     <div class="mb-3">
                         <label for="input-name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="input-name">
+                        <input type="text" class="form-control" name="realName" id="input-name">
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-primary btn-lg tab-next">Continue</button>
