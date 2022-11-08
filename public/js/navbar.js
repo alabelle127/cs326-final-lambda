@@ -1,4 +1,6 @@
-const navbarItems = {
+import { getLoggedInUser } from "./getLoggedInUser.js";
+
+let navbarItems = {
   Home: "./",
   "Find groups": "./StudentGroupFinder.html",
   "Add/remove classes": "./register_classes.html",
@@ -38,7 +40,7 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
     navItemElem.appendChild(navItemLinkElem);
     contentList.appendChild(navItemElem);
   }
-  if (loggedInUserID >= 0) {
+  if (loggedInUserID != null) {
     // TODO: get profile picture from loggedInUserID
     navContentElem.insertAdjacentHTML(
       "beforeend",
@@ -54,10 +56,23 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
             <li>
                 <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="#">Sign out</a></li>
+            <li><a id="logout-btn" class="dropdown-item text-danger" href="#">Sign out</a></li>
         </ul>
       </div>`
     );
+    const logoutButtonElem = document.getElementById("logout-btn");
+    logoutButtonElem.addEventListener("click", async () => {
+      const url = "/api/logout";
+      const r = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      window.sessionStorage.removeItem("userID");
+      window.location.reload();
+    });
   } else {
     navContentElem.insertAdjacentHTML(
       "beforeend",
@@ -69,10 +84,15 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
   }
 }
 
-// TODO: get loggedInUserID from cookie
-const loggedInUserID = 1001;
-const currentPage = document.querySelector('meta[name="nav-name"]').content;
+getLoggedInUser().then((userID) => {
+  if (userID === null) {
+    navbarItems = {
+      Home: "./",
+    };
+  }
+  const currentPage = document.querySelector('meta[name="nav-name"]').content;
 
-for (const navbarElem of document.getElementsByClassName("navbar")) {
-  generateNavbar(navbarElem, currentPage, loggedInUserID);
-}
+  for (const navbarElem of document.getElementsByClassName("navbar")) {
+    generateNavbar(navbarElem, currentPage, userID);
+  }
+});
