@@ -11,6 +11,7 @@
     <link href="./css/homepage.css" rel="stylesheet">
     <meta name="nav-name" content="Settings">
     <script src="./js/navbar.js" type="module" defer></script>
+    <script src="./js/accountSettings.js" type="module" defer></script>
 </head>
 
 <body>
@@ -27,19 +28,35 @@
                 <form class="w-50 mb-5">
                     <div class="input-group mb-1">
                         <span class="input-group-text">Change password:</span>
-                        <input type="password" class="form-control" id="input-password" aria-label="Change password">
+                        <input type="password" class="form-control" id="form-password" name="password" aria-label="Change password">
                     </div>
                     <div class="input-group mb-1">
-                        <span class="input-group-text">Change profile bio:</span>
-                        <textarea class="form-control" id="input-bio"></textarea>
+                        <span class="input-group-text">Description:</span>
+                        <textarea class="form-control" id="form-description" name="description"></textarea>
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Change contact info:</span>
-                        <textarea class="form-control" id="input-contact"></textarea>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">Contact info:</span>
+                        <textarea class="form-control" id="form-contact" name="contact"></textarea>
+                    </div>
+                    <div class="input-group mb-1">
+                        <span class="input-group-text">Profile picture URL:</span>
+                        <input class="form-control" id="form-profile_picture" name="profile_picture">
+                    </div>
+                    <div class="form-check mb-1">
+                        <input class="form-check-input" type="checkbox" value="" id="form-private_profile">
+                        <label class="form-check-label" for="form-private_profile">
+                            Private profile
+                        </label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="form-looking_for_partners">
+                        <label class="form-check-label" for="form-looking_for_partners">
+                            Looking for partners
+                        </label>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-outline-primary btn-lg mx-2">Cancel</button>
-                        <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                        <button id="cancel-btn" type="button" class="btn btn-outline-primary btn-lg mx-2">Cancel</button>
+                        <button id="save-btn" type="button" class="btn btn-primary btn-lg">Save</button>
                     </div>
                 </form>
             </div>

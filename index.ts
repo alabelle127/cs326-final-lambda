@@ -265,8 +265,82 @@ app.post("/api/users/:userID/registered_classes", (req, res) => {
   }
 });
 
+app.get("/api/users/:userID", (req, res) => {
+  console.log(
+    `Received API request to get user data ${req.params.userID}, by user ${req.session.userID}`
+  );
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+  // Check if authorized to access this data
+  // Placeholder data
+  const privateProfile = true;
+  if (!privateProfile || req.session.userID === userID) {
+    res.json({
+      success: true,
+      data: {
+        username: "gkcho",
+        real_name: "Gavin Cho",
+        userID: 1001,
+        profile_picture:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
+        description: "Senior CS & Math major",
+        contact_info: "Call or text me 413-555-5555",
+        looking_for_partners: true,
+        private_profile: true,
+      },
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User's profile is private",
+    });
+  }
+});
+
+app.post("/api/users/:userID", (req, res) => {
+  console.log(
+    `Received API request to set user data ${req.params.userID}, by user ${req.session.userID}`
+  );
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+  // Check if authorized to modify this data
+  // Placeholder data
+  const privateProfile = true;
+  if (req.session.userID === userID) {
+    res.json({
+      success: true,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "Not authorized",
+    });
+  }
+});
+
+// Some suggested API endpoints for you guys
+
 // GET /api/users/:userID/compatible_partners - return compatible study partners for user
-// POST /api/users/:userID/create_meeting - create a weekly meeting
+// GET /api/users/:userID/matches - return incoming matches for user
+// GET /api/users/:userID/meetings - return weekly meetings for user
+// GET /api/users/:userID/partners - return study partners for user
+
+// GET /api/notifications/:userID - user's incoming notifications/match requests
+// POST /api/notifications/:userID1/:userID2 - send match request from user1 to user2
+
+// POST /api/create_meeting - create a weekly meeting between 2 users
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
