@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import express, { Express } from "express";
+import express, { application, Express } from "express";
 import session from "express-session";
 
 declare module "express-session" {
@@ -334,10 +334,145 @@ app.post("/api/users/:userID", (req, res) => {
 
 // GET /api/users/:userID/compatible_partners - return compatible study partners for user
 // GET /api/users/:userID/matches - return incoming matches for user
+
 // GET /api/users/:userID/meetings - return weekly meetings for user
+app.get("/api/users/:userID/meetings", (req, res) => {
+  console.log(`request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`);
+
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+
+  const privateProfile = true;
+  if (!privateProfile || req.session.userID === userID) {
+    res.json({
+      success: true,
+      data: {
+        meetings: [
+          {
+            day: "Mo",
+            start_time: 1430,
+            end_time: 1530,
+          },
+          {
+            day: "We",
+            start_time: 1500,
+            end_time: 1600,
+          },
+          {
+            day: "Fr",
+            start_time: 1430,
+            end_time: 1530,
+          }
+        ]
+      },
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User's profile is private",
+    });
+  }
+});
 // GET /api/users/:userID/partners - return study partners for user
+app.get("/api/users/:userID/partners", (req, res) => {
+  console.log(`request for study partners for user, ${req.params.userID}, by user ${req.session.userID}`);
+
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+
+  const privateProfile = true;
+  if (!privateProfile || req.session.userID === userID) {
+    res.json({
+      success: true,
+      data: {
+        partners: ["Chris Manning", "John Doe", "Monty Python"]
+      },
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User's profile is private",
+    });
+  }
+});
 
 // GET /api/notifications/:userID - user's incoming notifications/match requests
+app.get("/api/notifications/:userID", (req, res) => {
+  console.log(`request for notifications/match requests for user, ${req.params.userID}, by user ${req.session.userID}`);
+
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+
+  const privateProfile = true;
+  if (!privateProfile || req.session.userID === userID) {
+    res.json({
+      success: true,
+      data: {
+        matchReqs: ["CSMajor123", "MathMajor456"]
+      },
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User's profile is private",
+    });
+  }
+});
+
+// GET /api/users/:userID/previousCourses - user's previous courses
+app.get("/api/users/:userID/previousCourses", (req, res) => {
+  console.log(`request for previous courses for user, ${req.params.userID}, by user ${req.session.userID}`);
+
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "userID must be integer > 0",
+    });
+  }
+
+  const privateProfile = true;
+  if (!privateProfile || req.session.userID === userID) {
+    res.json({
+      success: true,
+      data: {
+        data: [
+          "CS187",
+          "CS220",
+          "CS230",
+          "CS240",
+          "CS240",
+          "CS311",
+        ]
+      },
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "User's profile is private",
+    });
+  }
+});
+
 // POST /api/notifications/:userID1/:userID2 - send match request from user1 to user2
 
 // POST /api/create_meeting - create a weekly meeting between 2 users
