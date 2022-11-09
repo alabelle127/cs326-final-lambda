@@ -35,6 +35,7 @@ function setDataFields(data, prevCourses, currCourses) {
 
 (async (student) => {
 
+    console.log("starting student code: " + student)
     const url = `/api/users/ + ${student}`;
     const r = await fetch(url, {
         headers: {
