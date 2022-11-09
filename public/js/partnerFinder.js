@@ -1,5 +1,5 @@
-import { getLoggedInUser } from "./getLoggedInUser";
-const compatible_users = [];
+import { getLoggedInUser } from "./getLoggedInUser.js";
+// const compatible_users = [];
 
 function generateUser(userJson) {
   const name = userJson["name"];
@@ -54,9 +54,12 @@ getLoggedInUser().then(async (userID) => {
   });
 
   const partners = document.getElementById("partners");
-  compatible_users = (await r.json()).data;
+  const compatible_users = (await r.json()).data;
+  console.log(compatible_users);
 
-  for(const user in compatible_users) {
-    partners.insertAdjacentHTML(generateUser(user));
+  for(let i = 0; i < compatible_users.length; i++) {
+    const user = compatible_users[i];
+    console.log(user);
+    partners.insertAdjacentHTML("afterbegin", generateUser(user));
   }
 });

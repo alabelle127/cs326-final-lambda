@@ -348,91 +348,93 @@ app.get("/api/users/:userID/compatible_partners", (req, res) => {
     });
   }
 
-  // Placeholder Data
-  if (req.session.userID === userID) {
-    res.json({
-      success: true,
-      // First two are examples, rest is filler
-      data: [
-        {
-          name: "David Barrington",
-          username: "dBKewper",
-          compatible_classes: [
-            "CS 326",
-            "Math 471"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "this stuff hard pls help :("
-        },
-        {
-          name: "Michael Stevens",
-          username: "Vsauce",
-          compatible_classes: [
-            "CS 576"
-          ],
-          major: "Physics",
-          minor: "Computer Science",
-          user_notes: "Unity is not my strongsuit"
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
-            "CS 453"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
-            "CS 453"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
-            "CS 453"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
-            "CS 453"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
-            "CS 453"
-          ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
-        }
-      ]
-    });
-  } else {
-    res.status(401).json({
-      success: false,
-      message: "Unauthorized user"
-    });
-  }
+  res.json({
+    success: true,
+    // First two are examples, rest is filler
+    data: [
+      {
+        name: "David Barrington",
+        username: "dBKewper",
+        compatible_classes: [
+          "CS 326",
+          "Math 471"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "this stuff hard pls help :("
+      },
+      {
+        name: "Michael Stevens",
+        username: "Vsauce",
+        compatible_classes: [
+          "CS 576"
+        ],
+        major: "Physics",
+        minor: "Computer Science",
+        user_notes: "Unity is not my strongsuit"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      }
+    ]
+  });
+
+  // // Placeholder Data
+  // if (req.session.userID === userID) {
+    
+  // } else {
+  //   res.status(401).json({
+  //     success: false,
+  //     message: "Unauthorized user"
+  //   });
+  // }
 });
 // GET /api/users/:userID/matches - return incoming matches for user
 app.get("/api/users/:userID/matches", (req, res) => {
