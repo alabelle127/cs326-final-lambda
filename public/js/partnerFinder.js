@@ -4,14 +4,14 @@ import { getLoggedInUser } from "./getLoggedInUser.js";
 function generateUser(userJson) {
   const name = userJson["name"];
   const username = userJson["username"];
-  const compatible_classes = userJson["compatible_users"];
+  const compatible_classes = userJson["compatible_classes"];
   const major = userJson["major"];
   const minor = userJson["minor"];
   const user_notes = userJson["user_notes"];
 
   const innerHTML = `
     <div class="list-group">
-    <div class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="list-group-item list-group-item-action flex-column align-items-start" id="user">
       <div class="d-flex w-100 justify-content-between">
         <!-- Groups and Students can display their picture next to their posting -->
         <img
@@ -22,7 +22,7 @@ function generateUser(userJson) {
         <h3 class="mb-1">${name}</h3>
         <h4 class="mb-1">${username}</h4>
 
-        <button>Send Invite</button>
+        <button id="invite">Send Invite</button>
       </div>
 
       <!-- Notes about the group. Class, Major, etc -->
@@ -55,11 +55,22 @@ getLoggedInUser().then(async (userID) => {
 
   const partners = document.getElementById("partners");
   const compatible_users = (await r.json()).data;
-  console.log(compatible_users);
 
   for(let i = 0; i < compatible_users.length; i++) {
     const user = compatible_users[i];
-    console.log(user);
     partners.insertAdjacentHTML("afterbegin", generateUser(user));
   }
+
+  const invite_button = document.getElementById("invite");
+  invite_button.addEventListener('click', async () => {
+    const userID1 = userID;
+    const userID2 = 1234; //Filler id for now
+    const match_url = `/api/notifications/${userID1}/${userID2}`;
+    // const match_r = await fetch(match_url, {
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type":"application/json"
+    //   }
+    // });
+  });
 });
