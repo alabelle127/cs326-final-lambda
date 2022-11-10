@@ -782,6 +782,22 @@ Set user data
 
 # Screenshots
 
+### Create Operation: Students create an account
+
+![Create Operation](screenshots/create.PNG)
+
+### Update Operation: Students can add/update classes at any time
+
+![Update Operation](screenshots/update.PNG)
+
+### Read Operation: Reads data from a list of a user's compatabile partners
+
+![Read Operation](screenshots/read.PNG)
+
+### Delete Operation: Students can remove classes they're not currently taking or wish to remove
+
+![Delete Operation](screenshots/delete.PNG)
+
 # Heroku URL
 
 (https://young-inlet-68897.herokuapp.com/)
@@ -803,6 +819,7 @@ Andrew:
 - List of incoming matches for user with API
 - Sending invite to match from user1 to user2 with API
 - Meeting scheduling with API
+- Adding screenshots of CRUD operations
 
 Chris:
 - fetching previous courses with API
