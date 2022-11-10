@@ -673,3 +673,10 @@ Andrew:
 - List of incoming matches for user with API
 - Sending invite to match from user1 to user2 with API
 - Meeting scheduling with API
+
+Chris:
+- fetching previous courses with API
+- getting a users notifications with the API
+- getting a users current study partners with API
+- getting a users weekly scheduled meetings with the API
+- setting up heroku deployment 
