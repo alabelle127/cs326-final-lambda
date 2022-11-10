@@ -365,7 +365,7 @@ Set user data
     "description": "[string]",
     "contact_info": "[string]",
     "looking_for_partners": "[boolean]",
-    "private_profile": "[boolean]
+    "private_profile": "[boolean]"
 }
 ```
 
