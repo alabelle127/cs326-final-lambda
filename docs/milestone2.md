@@ -402,79 +402,78 @@ Set user data
 
 ```json
 {
-    success: true,
-    // First two are examples, rest is filler
-    data: [
+    "success" true,
+    "data": [
       {
-        name: "David Barrington",
-        username: "dBKewper",
-        compatible_classes: [
+        "name": "David Barrington",
+        "username": "dBKewper",
+        "compatible_classes": [
           "CS 326",
           "Math 471"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "this stuff hard pls help :("
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "this stuff hard pls help :("
       },
       {
-        name: "Michael Stevens",
-        username: "Vsauce",
-        compatible_classes: [
+        "name": "Michael Stevens",
+        "username": "Vsauce",
+        "compatible_classes": [
           "CS 576"
         ],
-        major: "Physics",
-        minor: "Computer Science",
-        user_notes: "Unity is not my strongsuit"
+        "major": "Physics",
+        "minor": "Computer Science",
+        "user_notes": "Unity is not my strongsuit"
       },
       {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: [
+        "name": "NoName",
+        "username": "Nothing",
+        "compatible_classes": [
           "CS 453"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here"
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "Nothing to see here"
       },
       {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: [
+        "name": "NoName",
+        "username": "Nothing",
+        "compatible_classes": [
           "CS 453"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here"
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "Nothing to see here"
       },
       {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: [
+        "name": "NoName",
+        "username": "Nothing",
+        "compatible_classes": [
           "CS 453"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here"
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "Nothing to see here"
       },
       {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: [
+        "name": "NoName",
+        "username": "Nothing",
+        "compatible_classes": [
           "CS 453"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here"
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "Nothing to see here"
       },
       {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: [
+        "name": "NoName",
+        "username": "Nothing",
+        "compatible_classes": [
           "CS 453"
         ],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here"
+        "major": "Computer Science",
+        "minor": "Mathematics",
+        "user_notes": "Nothing to see here"
       }
     ]
 }
@@ -486,9 +485,8 @@ Set user data
 
 ```json
 {
-    res.status(400).json({
-    success: false,
-    message: "Invalid User ID"
+    "success": false,
+    "message": "Invalid User ID"
 }
 ```
 
@@ -504,58 +502,58 @@ Set user data
 
 ```json
 {
-      success: true,
+      "success": true,
 
-      data: [
+      "data": [
         {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
+          "name": "NoName",
+          "username": "Nothing",
+          "compatible_classes": [
             "CS 453"
           ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "user_notes": "Nothing to see here"
         },
         {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
+          "name": "NoName",
+          "username": "Nothing",
+          "compatible_classes": [
             "CS 453"
           ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "user_notes": "Nothing to see here"
         },
         {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
+          "name": "NoName",
+          "username": "Nothing",
+          "compatible_classes": [
             "CS 453"
           ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "user_notes": "Nothing to see here"
         },
         {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
+          "name": "NoName",
+          "username": "Nothing",
+          "compatible_classes": [
             "CS 453"
           ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "user_notes": "Nothing to see here"
         },
         {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: [
+          "name": "NoName",
+          "username": "Nothing",
+          "compatible_classes": [
             "CS 453"
           ],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here"
+          "major": "Computer Science",
+          "minor": "Mathematics",
+          "user_notes": "Nothing to see here"
         }
       ]
 }
@@ -567,8 +565,8 @@ Set user data
 
 ```json
 {
-      success: false,
-      message: "Unauthorized user"
+      "success": false,
+      "message": "Unauthorized user"
 }
 ```
 
@@ -584,7 +582,7 @@ Set user data
 
 ```json
 {
-  success: true
+  "success": true
 }
 ```
 
@@ -594,8 +592,8 @@ Set user data
 
 ```json
 {
-  success: false,
-  message: unauthorized
+  "success": false,
+  "message": "unauthorized"
 }
 ```
 
@@ -608,23 +606,21 @@ Set user data
 **Payload**:
 
 ```json
-const available_times = [
-    {
-      class: "CS 326",
-      meeting_times: [
+{
+      "class": "CS 326",
+      "meeting_times": [
         {
-          day: "Mon",
-          start_time: 1900,
-          end_time: 2100
+          "day": "Mon",
+          "start_time": 1900,
+          "end_time": 2100
         },
         {
-          day: "Fri",
-          start_time: 1300,
-          end_time: 1500
+          "day": "Fri",
+          "start_time": 1300,
+          "end_time": 1500
         }
       ]
-    }
-  ];
+}
 ```
 
 ## Success Response
@@ -633,8 +629,8 @@ const available_times = [
 
 ```json
 {
-      success: true,
-      data: available_times
+      "success": true,
+      "data": "available_times"
 }
 ```
 
@@ -644,8 +640,8 @@ const available_times = [
 
 ```json
 {
-      success: false,
-      message: "unable to find desired meeting time"
+      "success": false,
+      "message": "unable to find desired meeting time"
 }
 ```
 
