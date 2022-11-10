@@ -330,11 +330,189 @@ app.post("/api/users/:userID", (req, res) => {
   }
 });
 
+
+
 // Some suggested API endpoints for you guys
 
 // GET /api/users/:userID/compatible_partners - return compatible study partners for user
-// GET /api/users/:userID/matches - return incoming matches for user
+app.get("/api/users/:userID/compatible_partners", (req, res) => {
+  console.log(
+    `Received API request to get list of compatible partners for user ${req.session.userID}`
+  );
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "Invalid User ID"
+    });
+  }
 
+  // Placeholder Data
+  if (req.session.userID === userID) {
+    res.json({
+      success: true,
+      // First two are examples, rest is filler
+      data: [
+        {
+          name: "David Barrington",
+          username: "dBKewper",
+          compatible_classes: [
+            "CS 326",
+            "Math 471"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "this stuff hard pls help :("
+        },
+        {
+          name: "Michael Stevens",
+          username: "Vsauce",
+          compatible_classes: [
+            "CS 576"
+          ],
+          major: "Physics",
+          minor: "Computer Science",
+          user_notes: "Unity is not my strongsuit"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        }
+      ]
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorized user"
+    });
+  }
+});
+// GET /api/users/:userID/matches - return incoming matches for user
+app.get("/api/users/:userID/matches", (req, res) => {
+  console.log(
+    `Recieved API request to get list of matches for user ${req.session.userID}`
+  );
+  const userID = parseInt(req.params.userID);
+  if (isNaN(userID) || userID <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "Invalid User ID"
+    });
+  }
+
+  // Placeholder Data
+  if(req.session.userID === userID) {
+    res.json({
+      success: true,
+
+      data: [
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        }
+      ]
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorized user"
+    });
+  }
+});
 // GET /api/users/:userID/meetings - return weekly meetings for user
 app.get("/api/users/:userID/meetings", (req, res) => {
   console.log(`request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`);
@@ -474,8 +652,70 @@ app.get("/api/users/:userID/previousCourses", (req, res) => {
 });
 
 // POST /api/notifications/:userID1/:userID2 - send match request from user1 to user2
+app.post("/api/notifications/:userID1/:userID2", (req, res) => {
+  console.log(
+    `Recieved API request to send an invitiation from user ${req.params.userID1} to ${req.params.userID2}`
+  );
+  const userID1 = parseInt(req.params.userID1);
+  const userID2 = parseInt(req.params.userID2);
+  if (isNaN(userID1) || userID1 <= 0 || isNaN(userID2) || userID2 <= 0) {
+    // Invalid userID in request
+    res.status(400).json({
+      success: false,
+      message: "Invalid User ID"
+    });
+  }
+
+  if(req.session.userID === userID1) {
+    // Send match request from user 1 to user 2
+    res.json({
+      success: true,
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "Unauthorized"
+    });
+  }
+});
 
 // POST /api/create_meeting - create a weekly meeting between 2 users
+app.post("/api/create_meeting", (req, res) =>  {
+  const user1 = req.body.user1;
+  const user2 = req.body.user2;
+  console.log(
+    `Recieved API request to create a meeting between ${user1} and ${user2}`
+  );
+  const available_times = [
+    {
+      class: "CS 326",
+      meeting_times: [
+        {
+          day: "Mon",
+          start_time: 1900,
+          end_time: 2100
+        },
+        {
+          day: "Fri",
+          start_time: 1300,
+          end_time: 1500
+        }
+      ]
+    }
+  ];
+
+  if(available_times.length > 0) {
+    res.json({
+      success: true,
+      data: available_times
+    });
+  } else {
+    res.status(401).json({
+      success: false,
+      message: "unable to find desired meeting time"
+    });
+  }
+});
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
