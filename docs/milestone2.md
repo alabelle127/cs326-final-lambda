@@ -390,9 +390,271 @@ Set user data
 }
 ```
 
+### List of Compatible Parters
+
+**Url** : `/api/users/:userID/compatible_partners`
+
+**Method** : `GET`
+
+## Success Response
+
+**Example**
+
+```json
+{
+    success: true,
+    // First two are examples, rest is filler
+    data: [
+      {
+        name: "David Barrington",
+        username: "dBKewper",
+        compatible_classes: [
+          "CS 326",
+          "Math 471"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "this stuff hard pls help :("
+      },
+      {
+        name: "Michael Stevens",
+        username: "Vsauce",
+        compatible_classes: [
+          "CS 576"
+        ],
+        major: "Physics",
+        minor: "Computer Science",
+        user_notes: "Unity is not my strongsuit"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      },
+      {
+        name: "NoName",
+        username: "Nothing",
+        compatible_classes: [
+          "CS 453"
+        ],
+        major: "Computer Science",
+        minor: "Mathematics",
+        user_notes: "Nothing to see here"
+      }
+    ]
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+    res.status(400).json({
+    success: false,
+    message: "Invalid User ID"
+}
+```
+
+### Return Incoming Matches for User
+
+**Url**: `/api/users/:userID/matches`
+
+**Method**: `GET`
+
+## Success Response
+
+**Example**
+
+```json
+{
+      success: true,
+
+      data: [
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        },
+        {
+          name: "NoName",
+          username: "Nothing",
+          compatible_classes: [
+            "CS 453"
+          ],
+          major: "Computer Science",
+          minor: "Mathematics",
+          user_notes: "Nothing to see here"
+        }
+      ]
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      success: false,
+      message: "Unauthorized user"
+}
+```
+
+### Sending Match request from user 1 to user 2
+
+**Url**: `/api/notifications/:userID1/:userID2`
+
+**Method**: `POST`
+
+## Success Response
+
+**Example**
+
+```json
+{
+  success: true
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+  success: false,
+  message: unauthorized
+}
+```
+
+### Meeting Scheduling
+
+**Url**: `/api/create_meeting`
+
+**Method**: `POST`
+
+**Payload**:
+
+```json
+const available_times = [
+    {
+      class: "CS 326",
+      meeting_times: [
+        {
+          day: "Mon",
+          start_time: 1900,
+          end_time: 2100
+        },
+        {
+          day: "Fri",
+          start_time: 1300,
+          end_time: 1500
+        }
+      ]
+    }
+  ];
+```
+
+## Success Response
+
+**Example**
+
+```json
+{
+      success: true,
+      data: available_times
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      success: false,
+      message: "unable to find desired meeting time"
+}
+```
+
+
 # Screenshots
 
 # Heroku URL
+
+https://young-inlet-68897.herokuapp.com/
 
 # Division of Labor
 
@@ -404,3 +666,10 @@ Gavin:
 - Register new account with API
 - Class search with API
 - Update account settings with API
+
+Andrew:
+
+- Finding list of Compatible Partners with API
+- List of incoming matches for user with API
+- Sending invite to match from user1 to user2 with API
+- Meeting scheduling with API
