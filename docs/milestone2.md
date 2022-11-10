@@ -645,6 +645,140 @@ Set user data
 }
 ```
 
+### Previous Courses
+
+**Url**: `/api/users/:userID/previousCourses`
+
+## Success Response
+
+**Example**
+
+```json
+{
+      "success": true,
+      "data": {
+        "data": [
+          "CS187",
+          "CS220",
+          "CS230",
+          "CS240",
+          "CS240",
+          "CS311",
+        ]
+      },
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      "success": false,
+      "message": "User's profile is private"
+}
+```
+
+### incoming Notifications/Match requests 
+
+**Url**: `/api/notifications/:userID`
+
+## Success Response
+
+**Example**
+
+```json
+{
+      "success": true,
+      "data": {
+        "matchReqs": ["CSMajor123", "MathMajor456"]
+      },
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      "success": false,
+      "message": "User's profile is private"
+}
+```
+
+### Users Partners
+
+**Url**: `/api/users/:userID/partners`
+
+## Success Response
+
+**Example**
+
+```json
+{
+      "success": true,
+      "data": {
+        "partners": ["Chris Manning", "John Doe", "Monty Python"]
+      },
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      "success": false,
+      "message": "User's profile is private"
+}
+```
+
+### Users' Current Meetings
+
+**Url**: `/api/users/:userID/meeting`
+
+## Success Response
+
+**Example**
+
+```json
+{
+      "success": true,
+      "data": {
+        "meetings": [
+          {
+            "day": "Mo",
+            "start_time": 1430,
+            "end_time": 1530,
+          },
+          {
+            "day": "We",
+            "start_time": 1500,
+            "end_time": 1600,
+          },
+          {
+            "day": "Fr",
+            "start_time": 1430,
+            "end_time": 1530,
+          }
+        ]
+      },
+}
+```
+
+## Error Response
+
+**Example**
+
+```json
+{
+      "success": false,
+      "message": "User's profile is private"
+}
+```
 
 # Screenshots
 
