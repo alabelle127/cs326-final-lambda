@@ -35,24 +35,31 @@ function setDataFields(data, prevCourses, currCourses) {
 
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
-    previousCoursesField.innerHTML = prevCourses.data;
 
-    currentCoursesField.innerHTML = currCourses.data;
+    previousCoursesField.innerHTML = "";
+    for (const c in prevCourses.data) {
+        previousCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+    }
+
+    currentCoursesField.innerHTML = "";
+    if (currCourses.data !== undefined) {        
+        for (const c in currCourses.data) {
+            currentCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+        }
+    }
 
     profilePictureField.src = data.profile_picture;
 }
 
 getLoggedInUser().then(async (student) => {
-
+    if (student === null) {
+        window.location.replace("./login.html");
+    }
+      
+    const url = `/api/users/${student}`;
     console.log("starting student code: " + student);
-    console.log()
-    const url = `/api/users/ + ${student}`;
-    const r = await fetch(url, {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-    });
+    console.log(url);
+    const r = await fetch(url, {});
     
     console.log("starting prevCourses code: " + student);
     const prevUrl = `/api/users/${student}/previousCourses`;
@@ -77,6 +84,9 @@ getLoggedInUser().then(async (student) => {
     studentData = (await r.json()).data;
     studentPrevCourses = (await prevCourses.json()).data;
     studentCurrCourses = (await currCourses.json()).data;
+
+    console.log(studentCurrCourses);
+    console.log(studentPrevCourses);
 
     setDataFields(studentData, studentPrevCourses, studentCurrCourses);
 });
