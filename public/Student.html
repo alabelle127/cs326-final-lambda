@@ -11,9 +11,10 @@
 			integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
 			crossorigin="anonymous"
 		/>
-		<link rel="stylesheet" type="text/css" href="../css/Student.css" />
+		<link rel="stylesheet" type="text/css" href="css/Student.css" />
 		<meta name="nav-name" content="Student">
 		<script src="./js/navbar.js" type="module" defer></script>
+		<script src="./js/student.js" type="module" defer></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-sm bg-light"></nav>
@@ -23,11 +24,12 @@
 					<tr>
 						<td>
 							<br />
-							<img
-								class="profilePic"
-								src="../images/defaulProfilePic.png"
-								alt="Profile Pic"
-							/>
+								<img
+									id="profilePic"
+									class="profilePic"
+									src="images/defaulProfilePic.png"
+									alt="Profile Pic"
+								/>
 						</td>
 					</tr>
 					<tr>
@@ -38,27 +40,31 @@
 					<tr>
 						<td>
 							<br /><br />
-							Contact Information: <br />
-							Email: jdoe@umass.edu<br />
-							Phone: (123) 456-7890
+							<div id="info">
+								Contact Information: <br />
+								Email: jdoe@umass.edu<br />
+								Phone: (123) 456-7890
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>
 							<br /><br />
-							About Me: <br />
-							Pellentesque luctus dui sed ex efficitur, a malesuada ex faucibus.
-							Proin quis leo ornare, ultrices dolor sit amet, egestas libero.
-							Fusce tempor porta tellus, sed ullamcorper tortor eleifend at. Nam
-							cursus vestibulum finibus. Nullam sagittis lacus nunc, eget
-							imperdiet metus dictum sit amet. Vestibulum odio dui, mollis ut
-							laoreet et, ultrices quis augue. In eget est ac urna lacinia
-							venenatis
+							<div id="about">
+								About Me: <br />
+								Pellentesque luctus dui sed ex efficitur, a malesuada ex faucibus.
+								Proin quis leo ornare, ultrices dolor sit amet, egestas libero.
+								Fusce tempor porta tellus, sed ullamcorper tortor eleifend at. Nam
+								cursus vestibulum finibus. Nullam sagittis lacus nunc, eget
+								imperdiet metus dictum sit amet. Vestibulum odio dui, mollis ut
+								laoreet et, ultrices quis augue. In eget est ac urna lacinia
+								venenatis
+							</div>
 						</td>
 					</tr>
 				</table>
 			</div>
-			<div class="column">
+			<div id="name" class="column">
 				<br /><br />
 				<h3>Name:</h3>
 				<h3>John Doe</h3>
@@ -66,7 +72,7 @@
 			<div class="column">
 				<br /><br />
 				<h3>Previous Courses:</h3>
-				<ul>
+				<ul id="previousCourses">
 					<li>CS 111</li>
 					<li>CS 222</li>
 					<li>CS 333</li>
@@ -75,7 +81,7 @@
 			<div class="column">
 				<br /><br />
 				<h3>Current Courses:</h3>
-				<ul>
+				<ul id="currentCourses">
 					<li>CS 444</li>
 					<li>CS 555</li>
 					<li>CS 666</li>
