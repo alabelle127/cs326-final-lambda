@@ -66,6 +66,17 @@ getLoggedInUser().then(async (userID) => {
     const userID1 = userID;
     const userID2 = 1234; //Filler id for now
     const match_url = `/api/notifications/${userID1}/${userID2}`;
+    const match_r = await fetch(match_url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        from: userID1,
+        to: userID2
+      })
+    });
     // const match_r = await fetch(match_url, {
     //   headers: {
     //     Accept: "application/json",
