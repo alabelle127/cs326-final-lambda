@@ -2,18 +2,18 @@
 import { Browser, Builder, By, until } from "selenium-webdriver";
 import { ElementClickInterceptedError } from "selenium-webdriver/lib/error.js";
 
-const TERM = "2022 Fall";
+const TERM = "2022 Fall"; // "2023 Spring", "2022 Winter", "2022 Fall" ...
 
 // class search element IDs
 const SID = {
-  term: "UM_DERIVED_SA_UM_TERM_DESCR", // "2023 Spring", "2022 Winter", "2022 Fall" ...
+  term: "UM_DERIVED_SA_UM_TERM_DESCR",
   search: "win0divCLASS_SRCH_WRK2_SSR_PB_CLASS_SRCH", // search button
   newSearch: "CLASS_SRCH_WRK2_SSR_PB_NEW_SEARCH", // go back to search button
   subject: "CLASS_SRCH_WRK2_SUBJECT$108$", // "Accounting", "Aerospace Studies" ...
   courseNumberOperator: "CLASS_SRCH_WRK2_SSR_EXACT_MATCH1", // set to "greater than or equal to"
   courseNumber: "CLASS_SRCH_WRK2_CATALOG_NBR$8$", // set to 0
   showOpenOnly: "CLASS_SRCH_WRK2_SSR_OPEN_ONLY", // set to unchecked
-  error: "DERIVED_CLSMSG_ERROR_TEXT",
+  error: "DERIVED_CLSMSG_ERROR_TEXT", // no search results error
 };
 
 // class result element IDs
@@ -84,17 +84,18 @@ function parseDaysTimesString(str) {
     sat: match[6] != undefined,
     sun: match[7] != undefined,
   };
-  const startTime = new Date(0);
-  startTime.setHours(
-    match[10] === "PM" ? parseInt(match[8]) + 12 : parseInt(match[8])
-  );
-  startTime.setMinutes(parseInt(match[9]));
-  const endTime = new Date(0);
-  endTime.setHours(
-    match[13] === "PM" ? parseInt(match[11]) + 12 : parseInt(match[11])
-  );
-  endTime.setMinutes(parseInt(match[12]));
-
+  const startTime =
+    (match[10] === "PM" && parseInt(match[8]) != 12
+      ? parseInt(match[8]) + 12
+      : parseInt(match[8])) *
+      100 +
+    parseInt(match[9]);
+  const endTime =
+    (match[13] === "PM" && parseInt(match[11]) != 12
+      ? parseInt(match[11]) + 12
+      : parseInt(match[11])) *
+      100 +
+    parseInt(match[12]);
   return {
     days: days,
     startTime: startTime,
