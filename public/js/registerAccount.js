@@ -16,6 +16,8 @@ registerButtonElem.addEventListener("click", async () => {
       classes: window.classes,
     }),
   });
-  await r.json();
-  window.location.replace("/");
+  const { success } = await r.json();
+  if (success) {
+    window.location.replace("/");
+  }
 });

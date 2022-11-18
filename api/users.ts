@@ -4,14 +4,7 @@ export function get_registered_classes(req: Request, res: Response) {
   console.log(
     `Received API request to get registered classes for user ${req.params.userID}, by user ${req.session.userID}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
   // Check if authorized to access this data
   // Placeholder data
   const privateProfile = true;
@@ -88,14 +81,7 @@ export function set_registered_classes(req: Request, res: Response) {
   console.log(
     `Received API request to set registered classes to: ${newClasses}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
   // Check if authorized to change this data
   if (req.session.userID === userID) {
     // Change data
@@ -114,14 +100,8 @@ export function get_user(req: Request, res: Response) {
   console.log(
     `Received API request to get user data ${req.params.userID}, by user ${req.session.userID}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
+
   // Check if authorized to access this data
   // Placeholder data
   const privateProfile = true;
@@ -152,14 +132,7 @@ export function set_user(req: Request, res: Response) {
   console.log(
     `Received API request to set user data ${req.params.userID}, by user ${req.session.userID}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
   // Check if authorized to modify this data
   // Placeholder data
   const privateProfile = true;
@@ -265,14 +238,7 @@ export function get_matches(req: Request, res: Response) {
   console.log(
     `Recieved API request to get list of matches for user ${req.session.userID}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "Invalid User ID",
-    });
-  }
+  const userID = req.params.userID;
 
   // Placeholder Data
   if (req.session.userID === userID) {
@@ -335,15 +301,7 @@ export function get_meetings(req: Request, res: Response) {
     `request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`
   );
 
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
-
+  const userID = req.params.userID;
   const privateProfile = true;
   if (!privateProfile || req.session.userID === userID) {
     res.json({
@@ -381,14 +339,7 @@ export function get_partners(req: Request, res: Response) {
     `request for study partners for user, ${req.params.userID}, by user ${req.session.userID}`
   );
 
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
 
   const privateProfile = true;
   if (!privateProfile || req.session.userID === userID) {
@@ -411,14 +362,7 @@ export function get_previous_courses(req: Request, res: Response) {
     `request for previous courses for user, ${req.params.userID}, by user ${req.session.userID}`
   );
 
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
-      success: false,
-      message: "userID must be integer > 0",
-    });
-  }
+  const userID = req.params.userID;
 
   const privateProfile = true;
   if (!privateProfile || req.session.userID === userID) {
