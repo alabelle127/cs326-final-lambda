@@ -1,6 +1,17 @@
 // Scrape data from spire into database
+import dotenv from "dotenv";
+import { MongoClient, ServerApiVersion } from "mongodb";
 import { Browser, Builder, By, until } from "selenium-webdriver";
 import { ElementClickInterceptedError } from "selenium-webdriver/lib/error.js";
+
+dotenv.config();
+
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}/?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
 const TERM = "2022 Fall"; // "2023 Spring", "2022 Winter", "2022 Fall" ...
 
@@ -29,8 +40,8 @@ const RID = {
 };
 
 async function saveClassToDB(classData) {
-  // TODO
-  console.log(JSON.stringify(classData));
+  // console.log(JSON.stringify(classData));
+  await client.db("classes").collection(TERM).insertOne(classData);
 }
 
 async function waitForSearchPageToLoad(driver) {
@@ -104,21 +115,10 @@ function parseDaysTimesString(str) {
 }
 
 function parseRoomString(str) {
-  if (str === "On-Line") {
-    return {
-      building: "On-Line",
-      roomNumber: null,
-    };
-  }
   if (str.includes("TBA")) {
     return null;
   }
-  const lastSpace = str.lastIndexOf(" ");
-  return {
-    building: str.substring(0, lastSpace),
-    // room number should be string since some rooms start with letters
-    roomNumber: str.substring(lastSpace + 1),
-  };
+  return str;
 }
 
 const classDescRegex = /^(\S+)\s+(\S+)\s+(.+)$/;
@@ -287,6 +287,7 @@ async function scrapeSubject(driver, subjectValue) {
 (async () => {
   let driver = await new Builder().forBrowser(Browser.FIREFOX).build();
   try {
+    await client.connect();
     await loadClassSearch(driver);
     const subjectDropdown = await driver.findElement(By.id(SID.subject));
     const subjectValues = [];
@@ -299,7 +300,10 @@ async function scrapeSubject(driver, subjectValue) {
     for (const subjectValue of subjectValues) {
       await scrapeSubject(driver, subjectValue);
     }
+  } catch (err) {
+    console.error(err);
   } finally {
     await driver.quit();
+    await client.close();
   }
 })();
