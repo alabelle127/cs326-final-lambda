@@ -13,6 +13,9 @@ dotenv.config();
 const app: Express = express();
 const port = process.env.PORT ?? 8080;
 
+// MongoDB database
+const uri = process.env.MONGODB_URI;
+
 if (!process.env.SECRET) {
   throw new Error("SECRET environment variable not set");
 }
