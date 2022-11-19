@@ -20,6 +20,7 @@ import {
   set_registered_classes,
   set_user,
 } from "./api/users";
+import { get_student } from "./api/students";
 
 declare module "express-session" {
   interface SessionData {
@@ -91,6 +92,11 @@ app.get("/api/users/:userID/partners", get_partners);
 app.get("/api/notifications/:userID", get_notifications);
 app.post("/api/notifications/:userID1/:userID2", send_meeting_request);
 app.post("/api/create_meeting", create_meeting);
+
+/**
+ * Students
+ */
+app.get("/api/student/:studentID", get_student);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at https://localhost:${port}`);
