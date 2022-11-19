@@ -151,7 +151,7 @@ export function set_user(req: Request, res: Response) {
   }
 }
 
-// Andrew
+// Andrew (done)
 export async function get_compatible_partners(req: Request, res: Response) {
   console.log(
     `Received API request to get list of compatible partners for user ${req.session.userID}`
@@ -237,6 +237,7 @@ export function get_matches(req: Request, res: Response) {
   }
 }
 
+// Andrew
 export function get_meetings(req: Request, res: Response) {
   console.log(
     `request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`
@@ -275,6 +276,7 @@ export function get_meetings(req: Request, res: Response) {
   }
 }
 
+// Chris
 export function get_partners(req: Request, res: Response) {
   console.log(
     `request for study partners for user, ${req.params.userID}, by user ${req.session.userID}`
@@ -322,6 +324,7 @@ export function get_previous_courses(req: Request, res: Response) {
   }
 }
 
+// Andrew
 export async function findPartnerAndClass(
   client: MongoClient,
   classes: Array<Object>
