@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 
+// Chris
 export function get_notifications(req: Request, res: Response) {
   console.log(
     `request for notifications/match requests for user, ${req.params.userID}, by user ${req.session.userID}`
@@ -23,6 +24,7 @@ export function get_notifications(req: Request, res: Response) {
   }
 }
 
+// Andrew
 export function send_meeting_request(req: Request, res: Response) {
   console.log(
     `Recieved API request to send an invitiation from user ${req.params.userID1} to ${req.params.userID2}`
@@ -43,6 +45,7 @@ export function send_meeting_request(req: Request, res: Response) {
   }
 }
 
+// Andrew
 export function create_meeting(req: Request, res: Response) {
   const user1 = req.body.user1;
   const user2 = req.body.user2;

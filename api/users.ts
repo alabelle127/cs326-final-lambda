@@ -1,4 +1,7 @@
+import exp from "constants";
+import { FindCursor, MongoClient } from "mongodb";
 import { Request, Response } from "express";
+import { MiniCrypt } from "./miniCrypt";
 
 export function get_registered_classes(req: Request, res: Response) {
   console.log(
@@ -148,7 +151,8 @@ export function set_user(req: Request, res: Response) {
   }
 }
 
-export function get_compatible_partners(req: Request, res: Response) {
+// Andrew
+export async function get_compatible_partners(req: Request, res: Response) {
   console.log(
     `Received API request to get list of compatible partners for user ${req.session.userID}`
   );
@@ -163,77 +167,14 @@ export function get_compatible_partners(req: Request, res: Response) {
 
   res.json({
     success: true,
-    // First two are examples, rest is filler
-    data: [
-      {
-        name: "David Barrington",
-        username: "dBKewper",
-        compatible_classes: ["CS 326", "Math 471"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "this stuff hard pls help :(",
-      },
-      {
-        name: "Michael Stevens",
-        username: "Vsauce",
-        compatible_classes: ["CS 576"],
-        major: "Physics",
-        minor: "Computer Science",
-        user_notes: "Unity is not my strongsuit",
-      },
-      {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: ["CS 453"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here",
-      },
-      {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: ["CS 453"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here",
-      },
-      {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: ["CS 453"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here",
-      },
-      {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: ["CS 453"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here",
-      },
-      {
-        name: "NoName",
-        username: "Nothing",
-        compatible_classes: ["CS 453"],
-        major: "Computer Science",
-        minor: "Mathematics",
-        user_notes: "Nothing to see here",
-      },
-    ],
+    data: await findPartnerAndClass(
+      req.app.locals.client,
+      req.body.classes
+    )
   });
-  // // Placeholder Data
-  // if (req.session.userID === userID) {
-
-  // } else {
-  //   res.status(401).json({
-  //     success: false,
-  //     message: "Unauthorized user"
-  //   });
-  // }
 }
 
+// Andrew
 export function get_matches(req: Request, res: Response) {
   console.log(
     `Recieved API request to get list of matches for user ${req.session.userID}`
@@ -357,6 +298,7 @@ export function get_partners(req: Request, res: Response) {
   }
 }
 
+// Chris
 export function get_previous_courses(req: Request, res: Response) {
   console.log(
     `request for previous courses for user, ${req.params.userID}, by user ${req.session.userID}`
@@ -378,4 +320,31 @@ export function get_previous_courses(req: Request, res: Response) {
       message: "User's profile is private",
     });
   }
+}
+
+export async function findPartnerAndClass(
+  client: MongoClient,
+  classes: Array<Object>
+) {
+
+  const compatible_partners: Array<Object> = [];
+
+  for(const clss in classes) {
+    const partnerCursor: FindCursor = client
+      .db("users")
+      .collection("members")
+      .find({
+        "classes" : clss
+      })
+
+    partnerCursor.forEach(partner => {
+      compatible_partners.push({
+        "username": partner["username"],
+        "real_name": partner["real_name"],
+        "classes": partner["classes"]
+      })
+    });
+  }
+
+  return compatible_partners;
 }
