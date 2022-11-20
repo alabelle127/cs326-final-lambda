@@ -83,8 +83,8 @@ getLoggedInUser().then(async (student) => {
     console.log("passed all fetches");
 
     console.log(r);
-    console.log(r.json());
     let temp = r.json();
+    console.log(r);
     console.log(temp);
     console.log(temp.result);
     console.log(temp.status);
