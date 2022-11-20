@@ -5,7 +5,7 @@ export async function get_student(req: Request, res: Response) {
     console.log(
         `Received API request to get student info for ${req.params.userID}, by user ${req.session.userID}`
     );
-    const studentID = parseInt(req.params.userID);
+    const studentID = req.params.userID;
     // if (isNaN(studentID) || studentID <= 0) {
     //     // Invalid userID in request
     //     res.status(400).json({
