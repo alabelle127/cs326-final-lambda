@@ -2,7 +2,7 @@ import { getLoggedInUser } from "./getLoggedInUser.js";
 
 const url = window.location.href;
 const splitUrl = url.split('/');
-const target = splitUrl[splitUrl.length - 1];
+const target = splitUrl[splitUrl.length - 2];
 
 let studentData = {};
 let studentPrevCourses = {};
@@ -51,9 +51,10 @@ function setDataFields(data, prevCourses, currCourses) {
 }
 
 getLoggedInUser().then(async (student) => {
-    if (student === null) {
-        window.location.replace("./login.html");
-    }
+    // this is being commented out for testing purposes
+    // if (student === null) {
+    //     window.location.replace("./login.html");
+    // }
 
     const url = `/api/student/${target}`;
     console.log("starting student code: " + student);
