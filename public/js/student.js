@@ -2,7 +2,7 @@ import { getLoggedInUser } from "./getLoggedInUser.js";
 
 const url = window.location.href;
 const splitUrl = url.split('/');
-// const student = splitUrl[splitUrl.length - 2];
+const target = splitUrl[splitUrl.length - 1];
 
 let studentData = {};
 let studentPrevCourses = {};
@@ -35,7 +35,6 @@ function setDataFields(data, prevCourses, currCourses) {
 
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
-
     previousCoursesField.innerHTML = "";
     for (const c in prevCourses.data) {
         previousCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
@@ -55,35 +54,37 @@ getLoggedInUser().then(async (student) => {
     if (student === null) {
         window.location.replace("./login.html");
     }
-      
-    const url = `/api/users/${student}`;
+
+    const url = `/api/student/${target}`;
     console.log("starting student code: " + student);
     console.log(url);
     const r = await fetch(url, {});
     
-    console.log("starting prevCourses code: " + student);
-    const prevUrl = `/api/users/${student}/previousCourses`;
-    const prevCourses = await fetch(prevUrl, {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-    });
+    // console.log("starting prevCourses code: " + student);
+    // const prevUrl = `/api/users/${student}/previousCourses`;
+    // const prevCourses = await fetch(prevUrl, {
+    //     headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json"
+    //     },
+    // });
     
-    console.log("starting currCourses code: " + student);
-    const currUrl = `/api/users/${student}/registered_classes`
-    const currCourses = await fetch(currUrl, {
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-    });
+    // console.log("starting currCourses code: " + student);
+    // const currUrl = `/api/users/${student}/registered_classes`
+    // const currCourses = await fetch(currUrl, {
+    //     headers: {
+    //         Accept: "application/json",
+    //         "Content-Type": "application/json"
+    //     },
+    // });
 
     console.log("passed all fetches");
 
     studentData = (await r.json()).data;
-    studentPrevCourses = (await prevCourses.json()).data;
-    studentCurrCourses = (await currCourses.json()).data;
+    // studentPrevCourses = (await prevCourses.json()).data;
+    // studentCurrCourses = (await currCourses.json()).data;
+    studentPrevCourses = (await r.json().data['previousCourses']);
+    studentCurrCourses = (await r.json().data['currentCourses']);
 
     console.log(studentCurrCourses);
     console.log(studentPrevCourses);
