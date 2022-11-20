@@ -57,7 +57,7 @@ export async function helper(client: MongoClient, studentID: any) {
 
     const res = await client
     .db("users")
-    .collection("profile")
+    .collection("profiles")
     .findOne({studentID: studentID});
 
     return res;

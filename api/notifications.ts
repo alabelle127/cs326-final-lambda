@@ -10,7 +10,7 @@ export async function get_notifications(req: Request, res: Response) {
   const userID = req.params.userID;
   const client = req.app.locals.client;
   const entry = await helper(client, userID);    
-  
+
   if (entry === null) {
       res.status(404).json({
           success: false,
@@ -98,7 +98,7 @@ export async function helper(client: MongoClient, studentID: any) {
 
   const res = await client
   .db("users")
-  .collection("profile")
+  .collection("notifications")
   .findOne({studentID: studentID});
 
   return res;
