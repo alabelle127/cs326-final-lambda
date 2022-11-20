@@ -29,29 +29,31 @@ export async function get_student(req: Request, res: Response) {
 
     const privateProfile = entry['privateProfile'];
 
+    // even if the student profile is private if the logged in user is
+    // the target student then they can still access the profile
     if (!privateProfile || req.session.userID === req.params.userID) {
         res.json({
-        success: true,
-        data: {
-            username: studentID,
-            real_name: entry['realName'],
-            description: entry['bio'],
-            contact_info: entry['contactInfo'],
-            // looking_for_partners: entry['lookingForPartners'],
-            currentCourses: entry['currentClasses'],
-            previousCourses: entry['previousClasses'],
-            partners: entry['partners'],
-        },
+            success: true,
+            data: {
+                username: studentID,
+                real_name: entry['realName'],
+                description: entry['bio'],
+                contact_info: entry['contactInfo'],
+                // looking_for_partners: entry['lookingForPartners'],
+                currentCourses: entry['currentClasses'],
+                previousCourses: entry['previousClasses'],
+                partners: entry['partners'],
+            },
         });
     } else {
         res.status(401).json({
-        success: false,
-        message: "Student's profile is private",
-    });
-  }
+            success: false,
+            message: "Student's profile is private",
+        });
+    }
 }
 
-async function helper(client: MongoClient, studentID: any) {
+export async function helper(client: MongoClient, studentID: any) {
 
     const res = await client
     .db("users")
