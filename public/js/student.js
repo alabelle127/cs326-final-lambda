@@ -86,7 +86,7 @@ getLoggedInUser().then(async (student) => {
     console.log();
     console.log(r.json());
     console.log();
-    console.log(r.json().data);
+    console.log(r.json().result.data);
 
     studentData = (await r.json()).data;
     // studentPrevCourses = (await prevCourses.json()).data;
