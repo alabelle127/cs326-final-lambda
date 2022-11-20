@@ -59,6 +59,7 @@ getLoggedInUser().then(async (student) => {
     const url = `/api/student/${target}`;
     console.log("starting student code: " + student);
     console.log(url);
+    console.log("living on a prayer");
     const r = await fetch(url, {});
     
     // console.log("starting prevCourses code: " + student);
