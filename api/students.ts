@@ -6,14 +6,14 @@ export async function get_student(req: Request, res: Response) {
         `Received API request to get student info for ${req.params.userID}, by user ${req.session.userID}`
     );
     const studentID = parseInt(req.params.userID);
-    if (isNaN(studentID) || studentID <= 0) {
-        // Invalid userID in request
-        res.status(400).json({
-            success: false,
-            message: "Invalid student ID",
-        });
-        return;
-    }
+    // if (isNaN(studentID) || studentID <= 0) {
+    //     // Invalid userID in request
+    //     res.status(400).json({
+    //         success: false,
+    //         message: "Invalid student ID",
+    //     });
+    //     return;
+    // }
 
     const client = req.app.locals.client;
 
