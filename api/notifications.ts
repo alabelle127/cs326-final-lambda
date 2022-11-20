@@ -3,19 +3,29 @@ import { MongoClient } from "mongodb";
 import { me } from "./login";
 
 // Chris
-export function get_notifications(req: Request, res: Response) {
+export async function get_notifications(req: Request, res: Response) {
   console.log(
     `request for notifications/match requests for user, ${req.params.userID}, by user ${req.session.userID}`
   );
 
   const userID = req.params.userID;
+  const client = req.app.locals.client;
+  const entry = await helper(client, userID);    
 
-  const privateProfile = true;
+  if (entry === null) {
+      res.status(404).json({
+          success: false,
+          message: "Student does not exist",
+      });
+      return;
+  }
+
+  const privateProfile = entry['privateProfile'];
   if (!privateProfile || req.session.userID === userID) {
     res.json({
       success: true,
       data: {
-        matchReqs: ["CSMajor123", "MathMajor456"],
+        matchReqs: entry['notifs'],
       },
     });
   } else {
@@ -198,4 +208,14 @@ export async function create_meeting(req: Request, res: Response) {
       message: "unable to find desired meeting time",
     });
   }
+}
+
+export async function helper(client: MongoClient, studentID: any) {
+
+  const res = await client
+  .db("users")
+  .collection("notifications")
+  .findOne({studentID: studentID});
+
+  return res;
 }

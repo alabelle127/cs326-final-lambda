@@ -107,9 +107,9 @@ const client = new MongoClient(uri, {
     app.post("/api/create_meeting", create_meeting);
 
     /**
- * Students
- */
-app.get("/api/student/:studentID", get_student);
+     * Students
+     */
+    app.get("/api/student/:studentID", get_student);
 
 app.listen(port, () => {
       console.log(`[server]: Server is running at https://localhost:${port}`);

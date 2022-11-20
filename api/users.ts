@@ -280,6 +280,7 @@ export function get_meetings(req: Request, res: Response) {
 }
 
 // Chris
+// deprecated, functionally has been moved to the get_student api call in students.ts
 export function get_partners(req: Request, res: Response) {
   console.log(
     `request for study partners for user, ${req.params.userID}, by user ${req.session.userID}`
@@ -304,6 +305,7 @@ export function get_partners(req: Request, res: Response) {
 }
 
 // Chris
+// deprecated, functionally has been moved to the get_student api call in students.ts
 export function get_previous_courses(req: Request, res: Response) {
   console.log(
     `request for previous courses for user, ${req.params.userID}, by user ${req.session.userID}`
