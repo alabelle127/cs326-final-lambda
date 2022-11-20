@@ -90,15 +90,15 @@ getLoggedInUser().then(async (student) => {
         studentData = info.data;
         studentPrevCourses = info.data['previousCourses'];
         studentPrevCourses = info.data['currentCourses'];
+
+        console.log(studentData);
+        console.log(studentCurrCourses);
+        console.log(studentPrevCourses);
+    
+        setDataFields(studentData, studentPrevCourses, studentCurrCourses);
     });
 
     // studentData = (await r.json()).data;
     // studentPrevCourses = (await r.json().data['previousCourses']);
     // studentCurrCourses = (await r.json().data['currentCourses']);
-
-    console.log(studentData);
-    console.log(studentCurrCourses);
-    console.log(studentPrevCourses);
-
-    setDataFields(studentData, studentPrevCourses, studentCurrCourses);
 });
