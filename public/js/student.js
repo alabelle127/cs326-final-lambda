@@ -86,22 +86,17 @@ getLoggedInUser().then(async (student) => {
     r.json().then(info => {
         console.log(info.result);
         console.log(info.data);
+
+        studentData = info.data;
+        studentPrevCourses = info.data['previousCourses'];
+        studentPrevCourses = info.data['currentCourses'];
     });
-    // console.log(r);
-    // console.log(temp);
-    // console.log(await temp.result);
-    // console.log(await temp['result']);
-    // console.log((await r.json()).result);
-    // console.log((await r.json())['result']);
-    // console.log((await r.json().result)['data']);
-    // console.log((await r.json())['result']['data']);
 
-    studentData = (await r.json()).data;
-    // studentPrevCourses = (await prevCourses.json()).data;
-    // studentCurrCourses = (await currCourses.json()).data;
-    studentPrevCourses = (await r.json().data['previousCourses']);
-    studentCurrCourses = (await r.json().data['currentCourses']);
+    // studentData = (await r.json()).data;
+    // studentPrevCourses = (await r.json().data['previousCourses']);
+    // studentCurrCourses = (await r.json().data['currentCourses']);
 
+    console.log(studentData);
     console.log(studentCurrCourses);
     console.log(studentPrevCourses);
 
