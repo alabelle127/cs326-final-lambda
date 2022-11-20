@@ -62,18 +62,11 @@ export async function helper(client: MongoClient, studentID: any) {
     .db("users")
     .collection("profiles")
     .findOne({studentID: studentID});
-
-
-
-    console.log(studentID);
-    console.log();
-    // console.log(client.db("users"));
-    // console.log();
-    // console.log(client.db("users").collection("profiles"));
-    // console.log();
-    console.log(client.db("users").collection("profiles")
-    .findOne({studentID: studentID}));
     
-
+    // console.log(studentID);
+    // console.log();
+    // console.log(client.db("users").collection("profiles")
+    // .findOne({studentID: studentID}));
+    
     return res;
 }

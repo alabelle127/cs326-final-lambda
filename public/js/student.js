@@ -82,6 +82,12 @@ getLoggedInUser().then(async (student) => {
 
     console.log("passed all fetches");
 
+    console.log(r);
+    console.log();
+    console.log(r.json());
+    console.log();
+    console.log(r.json().data);
+
     studentData = (await r.json()).data;
     // studentPrevCourses = (await prevCourses.json()).data;
     // studentCurrCourses = (await currCourses.json()).data;
