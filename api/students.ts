@@ -17,7 +17,9 @@ export async function get_student(req: Request, res: Response) {
 
     const client = req.app.locals.client;
 
-    const entry = await helper(client, studentID);    
+    const entry = await helper(client, studentID);   
+    
+    console.log(entry);
 
     if (entry === null) {
         res.status(404).json({
