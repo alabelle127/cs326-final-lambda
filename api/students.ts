@@ -66,10 +66,10 @@ export async function helper(client: MongoClient, studentID: any) {
 
     console.log(studentID);
     console.log();
-    console.log(client.db("users"));
-    console.log();
-    console.log(client.db("users").collection("profiles"));
-    console.log();
+    // console.log(client.db("users"));
+    // console.log();
+    // console.log(client.db("users").collection("profiles"));
+    // console.log();
     console.log(client.db("users").collection("profiles")
     .find({studentID: studentID}));
     
