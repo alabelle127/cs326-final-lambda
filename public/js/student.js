@@ -1,8 +1,8 @@
 import { getLoggedInUser } from "./getLoggedInUser.js";
 
 const url = window.location.href;
-const splitUrl = url.split('/');
-const target = splitUrl[splitUrl.length - 2];
+const splitUrl = url.split('?');
+const target = splitUrl[splitUrl.length - 1];
 
 let studentData = {};
 let studentPrevCourses = {};
