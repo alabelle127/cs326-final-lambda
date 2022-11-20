@@ -174,8 +174,46 @@ export async function get_compatible_partners(req: Request, res: Response) {
   });
 }
 
-// Andrew
-export function get_matches(req: Request, res: Response) {
+async function get_matches_helper(client: MongoClient, username: string) {
+  const matches_cursor = client.db("matches").collection("matches")
+    .find({
+      "$or": [
+        {"user1":username},
+        {"user2":username}
+      ]
+    });
+
+  const matches: Array<Object> = []
+
+  matches_cursor.forEach(match => {
+
+    client.db("users").collection("members")
+      .findOne({ "username": match["user1"] === username? match["user2"] : match["user1"]}, {
+        projection: {
+          "username": 1,
+          "real_name": 1,
+          "classes": 1
+        }
+      })
+      .then(user => {
+        if (user) {
+          matches.push({
+            "username": user["username"],
+            "real_name": user["real_name"],
+            "classes": user["classes"]
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  });
+
+  return matches;
+}
+
+// Andrew (done)
+export async function get_matches(req: Request, res: Response) {
   console.log(
     `Recieved API request to get list of matches for user ${req.session.userID}`
   );
@@ -185,49 +223,10 @@ export function get_matches(req: Request, res: Response) {
   if (req.session.userID === userID) {
     res.json({
       success: true,
-
-      data: [
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: ["CS 453"],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here",
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: ["CS 453"],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here",
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: ["CS 453"],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here",
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: ["CS 453"],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here",
-        },
-        {
-          name: "NoName",
-          username: "Nothing",
-          compatible_classes: ["CS 453"],
-          major: "Computer Science",
-          minor: "Mathematics",
-          user_notes: "Nothing to see here",
-        },
-      ],
+      data: await get_matches_helper(
+        req.app.locals.client,
+        req.body.username
+      ),
     });
   } else {
     res.status(401).json({
@@ -235,6 +234,10 @@ export function get_matches(req: Request, res: Response) {
       message: "Unauthorized user",
     });
   }
+}
+
+async function get_meetings_helper(client: MongoClient, parters: Array<Object>) {
+
 }
 
 // Andrew
@@ -324,7 +327,7 @@ export function get_previous_courses(req: Request, res: Response) {
   }
 }
 
-// Andrew
+// Andrew (done)
 export async function findPartnerAndClass(
   client: MongoClient,
   classes: Array<Object>
