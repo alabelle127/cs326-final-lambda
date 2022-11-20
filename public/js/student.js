@@ -37,12 +37,16 @@ function setDataFields(data, prevCourses, currCourses) {
 
     previousCoursesField.innerHTML = "";
     for (const c in prevCourses.data) {
+        console.log(c);
+        console.log(prevCourses.data[c]);
         previousCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
     }
 
     currentCoursesField.innerHTML = "";
     if (currCourses.data !== undefined) {        
         for (const c in currCourses.data) {
+            console.log(c);
+            console.log(currCourses.data[c]);
             currentCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
         }
     }
@@ -57,48 +61,26 @@ getLoggedInUser().then(async (student) => {
     // }
 
     const url = `/api/student/${target}`;
-    console.log("starting student code: " + student);
-    console.log(url);
-    console.log("living on a prayer");
+    // console.log("starting student code: " + student);
+    // console.log(url);
+    // console.log("living on a prayer");
     const r = await fetch(url, {});
-    
-    // console.log("starting prevCourses code: " + student);
-    // const prevUrl = `/api/users/${student}/previousCourses`;
-    // const prevCourses = await fetch(prevUrl, {
-    //     headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json"
-    //     },
-    // });
-    
-    // console.log("starting currCourses code: " + student);
-    // const currUrl = `/api/users/${student}/registered_classes`
-    // const currCourses = await fetch(currUrl, {
-    //     headers: {
-    //         Accept: "application/json",
-    //         "Content-Type": "application/json"
-    //     },
-    // });
 
-    console.log("passed all fetches");
+    // console.log("passed all fetches");
 
     console.log(r);
     r.json().then(info => {
-        console.log(info.result);
-        console.log(info.data);
+        // console.log(info.result);
+        // console.log(info.data);
 
         studentData = info.data;
         studentPrevCourses = info.data['previousCourses'];
         studentCurrCourses = info.data['currentCourses'];
 
-        console.log(studentData);
-        console.log(studentCurrCourses);
-        console.log(studentPrevCourses);
+        // console.log(studentData);
+        // console.log(studentCurrCourses);
+        // console.log(studentPrevCourses);
     
         setDataFields(studentData, studentPrevCourses, studentCurrCourses);
     });
-
-    // studentData = (await r.json()).data;
-    // studentPrevCourses = (await r.json().data['previousCourses']);
-    // studentCurrCourses = (await r.json().data['currentCourses']);
 });
