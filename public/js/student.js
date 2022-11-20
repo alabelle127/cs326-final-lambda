@@ -89,7 +89,7 @@ getLoggedInUser().then(async (student) => {
 
         studentData = info.data;
         studentPrevCourses = info.data['previousCourses'];
-        studentPrevCourses = info.data['currentCourses'];
+        studentCurrCourses = info.data['currentCourses'];
 
         console.log(studentData);
         console.log(studentCurrCourses);
