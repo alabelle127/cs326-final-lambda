@@ -37,8 +37,8 @@ if the requested student does not exist
 
 ```json
 [
-  success: false,
-  message: "Student does not exist",
+  "success": "false",
+  "message": "Student does not exist",
 ]
 ```
 
