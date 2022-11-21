@@ -71,7 +71,7 @@ getLoggedInUser().then(async (student) => {
     // console.log("passed all fetches");
 
     console.log(r);
-    r.json().then(info => {
+    r.json().then(async info => {
         // console.log(info.result);
         // console.log(info.data);
 
@@ -83,6 +83,6 @@ getLoggedInUser().then(async (student) => {
         console.log(studentCurrCourses);
         console.log(studentPrevCourses);
     
-        setDataFields(studentData, studentPrevCourses, studentCurrCourses);
+        await setDataFields(studentData, studentPrevCourses, studentCurrCourses);
     });
 });
