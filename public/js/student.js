@@ -36,6 +36,7 @@ function setDataFields(data, prevCourses, currCourses) {
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
     previousCoursesField.innerHTML = "";
+    console.log(prevCourses.data);
     for (const c in prevCourses.data) {
         console.log(c);
         console.log(prevCourses.data[c]);
@@ -43,6 +44,7 @@ function setDataFields(data, prevCourses, currCourses) {
     }
 
     currentCoursesField.innerHTML = "";
+    console.log(currCourses.data);
     if (currCourses.data !== undefined) {        
         for (const c in currCourses.data) {
             console.log(c);
