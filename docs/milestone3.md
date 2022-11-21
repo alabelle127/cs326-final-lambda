@@ -770,7 +770,7 @@ Gavin:
 
 - implemented back-end functionality for registering/creating accounts for students
 - implemented back-end functionality logging in and logging out
--   validating passwords
+- implemented algorithm for scraping class data from spire with spireScraper.mjs
 - refactored original index.ts into multiple ts files in the api folder
 - implemented back-end functionality for searching
 - setup minicrypt.ts and multiple library imports for future use of mongodb
