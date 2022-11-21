@@ -768,16 +768,24 @@ if the requested student does not exist
 
 Gavin:
 
-- placeholder
+- implemented back-end functionality for registering/creating accounts for students
+- implemented back-end functionality logging in and logging out
+-   validating passwords
+- refactored original index.ts into multiple ts files in the api folder
+- implemented back-end functionality for searching
+- setup minicrypt.ts and multiple library imports for future use of mongodb
+- setup backbone for implenting mongodb function calls into project
+- implemented "me" API call
 
 Andrew:
 
 - implemented get_matches API call
 - implemented get_meetings API call
 - implemented get_compatible_partners API call
-- implemented sending and creating meetings API call
 - implemented back-end functionality for creating/reading meetings
+- aggregated functionality of creating meetings to send_meeting_requests
 - implemented back-end functionality for reading matches 
+- implemented algorithm for automatic meeting scheduling
 
 Chris:
 - created Student API which serves as a collection of previous API calls that were unsorted
