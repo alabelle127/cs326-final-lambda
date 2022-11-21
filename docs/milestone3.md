@@ -772,7 +772,12 @@ Gavin:
 
 Andrew:
 
-- placeholder
+- implemented get_matches API call
+- implemented get_meetings API call
+- implemented get_compatible_partners API call
+- implemented sending and creating meetings API call
+- implemented back-end functionality for creating/reading meetings
+- implemented back-end functionality for reading matches 
 
 Chris:
 - created Student API which serves as a collection of previous API calls that were unsorted
