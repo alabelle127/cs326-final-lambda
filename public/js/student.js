@@ -36,11 +36,11 @@ function setDataFields(data, prevCourses, currCourses) {
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
     previousCoursesField.innerHTML = "";
-    console.log(prevCourses.data);
-    for (const c in prevCourses.data) {
+    console.log(data.previousCourses);
+    for (const c in data.previousCourses) {
         console.log(c);
-        console.log(prevCourses.data[c]);
-        previousCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+        console.log(data.previousCourses[c]);
+        previousCoursesField.innerHTML += `<li>${data.previousCourses[c]}</li>`;
     }
 
     currentCoursesField.innerHTML = "";
@@ -49,7 +49,7 @@ function setDataFields(data, prevCourses, currCourses) {
         for (const c in currCourses.data) {
             console.log(c);
             console.log(currCourses.data[c]);
-            currentCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+            currentCoursesField.innerHTML += `<li>${currCourses.data[c]}</li>`;
         }
     }
 
