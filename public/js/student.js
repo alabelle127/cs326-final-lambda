@@ -47,7 +47,9 @@ function setDataFields(data) {
         }
     }
 
-    profilePictureField.src = data.profile_picture;
+    if (data.profile_picture !== undefined && data.profile_picture !== null) {
+        profilePictureField.src = data.profile_picture;
+    }
 }
 
 getLoggedInUser().then(async (student) => {
@@ -57,26 +59,13 @@ getLoggedInUser().then(async (student) => {
     // }
 
     const url = `/api/student/${target}`;
-    // console.log("starting student code: " + student);
-    // console.log(url);
-    // console.log("living on a prayer");
     const r = await fetch(url, {});
 
-    // console.log("passed all fetches");
-
-    console.log(r);
     r.json().then(async info => {
-        // console.log(info.result);
-        // console.log(info.data);
-
         studentData = info.data;
         studentPrevCourses = info.data['previousCourses'];
         studentCurrCourses = info.data['currentCourses'];
-
-        // console.log(studentData);
-        console.log(studentCurrCourses);
-        console.log(studentPrevCourses);
     
-        await setDataFields(studentData, studentPrevCourses, studentCurrCourses);
+        setDataFields(studentData, studentPrevCourses, studentCurrCourses);
     });
 });
