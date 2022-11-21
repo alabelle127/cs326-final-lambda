@@ -2,6 +2,7 @@ import exp from "constants";
 import { FindCursor, MongoClient } from "mongodb";
 import { Request, Response } from "express";
 import { MiniCrypt } from "./miniCrypt";
+import { stringify } from "querystring";
 
 export function get_registered_classes(req: Request, res: Response) {
   console.log(
@@ -236,12 +237,41 @@ export async function get_matches(req: Request, res: Response) {
   }
 }
 
-async function get_meetings_helper(client: MongoClient, parters: Array<Object>) {
+async function get_meetings_helper(client: MongoClient, user: string) {
+  const meetings_cursor = client.db("users").collection("meetings")
+    .find({
+      "$or": [
+        { "userA": user, },
+        { "userB": user }
+      ]
+    });
 
+  const meetings = Array.prototype;
+
+
+  meetings_cursor.forEach(meeting_object => {
+    const meeting = {
+      partner: "",
+      meeting_times: {}
+    };
+    
+    const partner = meeting_object["userA" as keyof typeof meeting_object] === user ?
+      meeting_object["userB" as keyof typeof meeting_object] :
+      meeting_object["userA" as keyof typeof meeting_object];
+
+    const meeting_times = meeting_object["meeting_times" as keyof typeof meeting_object];
+
+    meeting["partner"] = partner;
+    meeting["meeting_times"] = meeting_times;
+
+    meetings.push(meeting);
+  });
+
+  return meetings;
 }
 
-// Andrew
-export function get_meetings(req: Request, res: Response) {
+// Andrew (done)
+export async function get_meetings(req: Request, res: Response) {
   console.log(
     `request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`
   );
@@ -251,25 +281,10 @@ export function get_meetings(req: Request, res: Response) {
   if (!privateProfile || req.session.userID === userID) {
     res.json({
       success: true,
-      data: {
-        meetings: [
-          {
-            day: "Mo",
-            start_time: 1430,
-            end_time: 1530,
-          },
-          {
-            day: "We",
-            start_time: 1500,
-            end_time: 1600,
-          },
-          {
-            day: "Fr",
-            start_time: 1430,
-            end_time: 1530,
-          },
-        ],
-      },
+      data: await get_matches_helper(
+        req.app.locals.client,
+        req.body.username
+      ),
     });
   } else {
     res.status(401).json({

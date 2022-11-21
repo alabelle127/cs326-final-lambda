@@ -2,12 +2,12 @@ import { getLoggedInUser } from "./getLoggedInUser.js";
 // const compatible_users = [];
 
 function generateUser(userJson) {
-  const name = userJson["name"];
-  const username = userJson["username"];
-  const compatible_classes = userJson["compatible_classes"];
-  const major = userJson["major"];
-  const minor = userJson["minor"];
-  const user_notes = userJson["user_notes"];
+  const name = userJson["name"] ?? "[name]";
+  const username = userJson["username"] ?? "[username]";
+  const compatible_classes = userJson["compatible_classes"] ?? [];
+  const major = userJson["major"] ?? "[major]";
+  const minor = userJson["minor"] ?? "[minor]";
+  const user_notes = userJson["user_notes"] ?? "[user_notes]";
 
   const innerHTML = `
     <div class="list-group">

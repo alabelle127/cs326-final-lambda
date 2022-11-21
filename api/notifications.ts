@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { MongoClient } from "mongodb";
 import { me } from "./login";
 
-// Chris
+// Chris (done)
 export async function get_notifications(req: Request, res: Response) {
   console.log(
     `request for notifications/match requests for user, ${req.params.userID}, by user ${req.session.userID}`
@@ -36,8 +36,61 @@ export async function get_notifications(req: Request, res: Response) {
   }
 }
 
-// Andrew
-export function send_meeting_request(req: Request, res: Response) {
+async function send_meeting_helper(client: MongoClient, userFrom: string, userTo: string) {
+  client.db("users").collection("meetings")
+    .insertOne({
+      userA: userFrom,
+      userB: userTo,
+      meeting_times: {
+        mon: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ],
+        tue: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ], 
+        wed: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ],
+        thu: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ],
+        fri: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ],
+        sat: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ],
+        sun: [
+          {
+            startTime: 0,
+            end: 2400
+          }
+        ]
+      }
+    });
+  
+}
+
+// Andrew (done)
+export async function send_meeting_request(req: Request, res: Response) {
   console.log(
     `Recieved API request to send an invitiation from user ${req.params.userID1} to ${req.params.userID2}`
   );
@@ -172,7 +225,7 @@ function find_available_times(times: any[]) {
   return result;
 }
 
-// Andrew
+// Andrew (done?)
 export async function create_meeting(req: Request, res: Response) {
   const user1 = req.body.user1;
   const user2 = req.body.user2;
@@ -196,6 +249,8 @@ export async function create_meeting(req: Request, res: Response) {
       available_times_user2
     ]
   );
+
+  
 
   if (available_times.length > 0) {
     res.json({

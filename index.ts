@@ -104,7 +104,8 @@ const client = new MongoClient(uri, {
      */
     app.get("/api/notifications/:userID", get_notifications);
     app.post("/api/notifications/:userID1/:userID2", send_meeting_request);
-    app.post("/api/create_meeting", create_meeting);
+    app.get("/api/users/:userID/get_meetings", get_meetings);
+    // app.post("/api/create_meeting", create_meeting);
 
     /**
      * Students
