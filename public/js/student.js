@@ -26,7 +26,7 @@ function getStudentData(student) {
     };
 }
 
-function setDataFields(data, prevCourses, currCourses) {
+function setDataFields(data) {
     nameField.innerHTML = `<br /><br />
                             <h3>Name:</h3>
                             <h3>${data.real_name}</h3>`;
@@ -36,22 +36,20 @@ function setDataFields(data, prevCourses, currCourses) {
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
     previousCoursesField.innerHTML = "";
-    for (const c in prevCourses.data) {
-        console.log(c);
-        console.log(prevCourses.data[c]);
-        previousCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+    for (const c in data.previousCourses) {
+        previousCoursesField.innerHTML += `<li>${data.previousCourses[c]}</li>`;
     }
 
     currentCoursesField.innerHTML = "";
-    if (currCourses.data !== undefined) {        
-        for (const c in currCourses.data) {
-            console.log(c);
-            console.log(currCourses.data[c]);
-            currentCoursesField.innerHTML += `<li>${prevCourses.data[c]}</li>`;
+    if (data.currentCourses !== undefined) {        
+        for (const c in data.currentCourses) {
+            currentCoursesField.innerHTML += `<li>${data.currentCourses[c]}</li>`;
         }
     }
 
-    profilePictureField.src = data.profile_picture;
+    if (data.profile_picture !== undefined && data.profile_picture !== null) {
+        profilePictureField.src = data.profile_picture;
+    }
 }
 
 getLoggedInUser().then(async (student) => {
@@ -61,25 +59,12 @@ getLoggedInUser().then(async (student) => {
     // }
 
     const url = `/api/student/${target}`;
-    // console.log("starting student code: " + student);
-    // console.log(url);
-    // console.log("living on a prayer");
     const r = await fetch(url, {});
 
-    // console.log("passed all fetches");
-
-    console.log(r);
-    r.json().then(info => {
-        // console.log(info.result);
-        // console.log(info.data);
-
+    r.json().then(async info => {
         studentData = info.data;
         studentPrevCourses = info.data['previousCourses'];
         studentCurrCourses = info.data['currentCourses'];
-
-        // console.log(studentData);
-        // console.log(studentCurrCourses);
-        // console.log(studentPrevCourses);
     
         setDataFields(studentData, studentPrevCourses, studentCurrCourses);
     });
