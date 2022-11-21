@@ -26,7 +26,7 @@ function getStudentData(student) {
     };
 }
 
-function setDataFields(data, prevCourses, currCourses) {
+function setDataFields(data) {
     nameField.innerHTML = `<br /><br />
                             <h3>Name:</h3>
                             <h3>${data.real_name}</h3>`;
@@ -36,20 +36,14 @@ function setDataFields(data, prevCourses, currCourses) {
     contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
     previousCoursesField.innerHTML = "";
-    console.log(data.previousCourses);
     for (const c in data.previousCourses) {
-        console.log(c);
-        console.log(data.previousCourses[c]);
         previousCoursesField.innerHTML += `<li>${data.previousCourses[c]}</li>`;
     }
 
     currentCoursesField.innerHTML = "";
-    console.log(currCourses.data);
-    if (currCourses.data !== undefined) {        
-        for (const c in currCourses.data) {
-            console.log(c);
-            console.log(currCourses.data[c]);
-            currentCoursesField.innerHTML += `<li>${currCourses.data[c]}</li>`;
+    if (data.currentCourses !== undefined) {        
+        for (const c in data.currentCourses) {
+            currentCoursesField.innerHTML += `<li>${data.currentCourses[c]}</li>`;
         }
     }
 
