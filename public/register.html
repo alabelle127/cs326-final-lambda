@@ -9,8 +9,8 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"
         defer></script>
     <link href="./css/homepage.css" rel="stylesheet">
-    <script src="./js/tabbedContent.js" defer></script>
     <meta name="nav-name" content="Register">
+    <script src="./js/tabbedContent.js" defer></script>
     <script src="./js/navbar.js" type="module" defer></script>
     <script src="./js/registerClasses.js" type="module" defer></script>
     <script src="./js/registerAccount.js" type="module" defer></script>
@@ -20,12 +20,14 @@
     <div id="page-container" class="d-flex flex-column">
         <nav class="navbar navbar-expand-sm bg-light"></nav>
         <!--BEGIN CONTENT-->
-        <div id="content-container-background" class="d-flex flex-column justify-content-center container-fluid flex-grow-1">
-            <!--Username, password, name-->
+        <div id="content-container-background"
+            class="d-flex flex-column justify-content-center container-fluid flex-grow-1">
+            <!--Username, password, name, etc.-->
             <div class="tab d-none flex-column align-items-center container-lg border border-dark rounded-3 bg-light">
                 <header class="text-center text-black py-5">
                     <h1 class="display-2 font-weight-bold mb-0">Create an account</h1>
                 </header>
+                <div id="error-alert" class="alert alert-danger d-none" role="alert"></div>
                 <form id="register-form" class="w-50 mb-5">
                     <div class="mb-3">
                         <label for="input-username" class="form-label">Username</label>
@@ -43,8 +45,16 @@
                         <label for="input-name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="realName" id="input-name">
                     </div>
+                    <div class="mb-3">
+                        <label for="input-contact" class="form-label">Contact Info</label>
+                        <textarea type="text" class="form-control" name="contact" id="input-contact"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-desc" class="form-label">Profile Description</label>
+                        <textarea class="form-control" name="description" id="input-desc"></textarea>
+                    </div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary btn-lg tab-next">Continue</button>
+                        <button id="page-1-button" type="button" class="btn btn-primary btn-lg">Continue</button>
                     </div>
                 </form>
             </div>
@@ -57,30 +67,35 @@
                 <div class="w-50 mb-5">
                     <ul id="class-list" class="class-list list-group mb-2"></ul>
                     <div class="d-flex mb-3">
-                        <button id="remove-class-btn" type="button" class="btn btn-danger btn-lg mx-1">Remove class</button>
+                        <button id="remove-class-btn" type="button" class="btn btn-danger btn-lg mx-1">Remove
+                            class</button>
                         <button type="button" class="btn btn-success btn-lg flex-grow-1 mx-1" data-bs-toggle="modal"
                             data-bs-target="#class-finder-modal">Add another class</button>
                     </div>
                     <!--Class finder modal menu-->
-                    <div class="modal fade" id="class-finder-modal" tabindex="-1" aria-labelledby="class-finder-modal-label"
-                        aria-hidden="true">
+                    <div class="modal fade" id="class-finder-modal" tabindex="-1"
+                        aria-labelledby="class-finder-modal-label" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="class-finder-modal-label">Find a Class</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <form class="d-flex mb-2" role="search">
                                         <input id="class-search-bar" class="form-control me-2" type="search"
                                             placeholder="Enter class ID or subject, course number" aria-label="Search">
-                                        <button id="class-search-btn" class="btn btn-outline-success" type="button">Search</button>
+                                        <button id="class-search-btn" class="btn btn-outline-success"
+                                            type="button">Search</button>
                                     </form>
                                     <ul id="class-search-list" class="class-list list-group mb-2"></ul>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button id="add-class-btn" type="button" class="btn btn-success" data-bs-dismiss="modal">Add this class</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <button id="add-class-btn" type="button" class="btn btn-success"
+                                        data-bs-dismiss="modal">Add this class</button>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +110,8 @@
             <div class="tab d-none flex-column align-items-center container-lg border border-dark rounded-3 bg-light">
                 <header class="text-center text-black py-5">
                     <h1 class="display-2 font-weight-bold mb-0">Almost done!</h1>
-                    <p class="lead mb-3">A calendar has been created with your schedule. Please login with Google to add it to your
+                    <p class="lead mb-3">A calendar has been created with your schedule. Please login with Google to add
+                        it to your
                         Google calendar:</p>
                     <!--Taken from https://stackoverflow.com/questions/46654248/how-to-display-google-sign-in-button-using-html-->
                     <a class="btn btn-outline-dark" href="#" role="button">

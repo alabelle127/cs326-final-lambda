@@ -1,8 +1,5 @@
-import exp from "constants";
-import { FindCursor, MongoClient } from "mongodb";
 import { Request, Response } from "express";
-import { MiniCrypt } from "./miniCrypt";
-import { stringify } from "querystring";
+import { FindCursor, MongoClient } from "mongodb";
 
 export function get_registered_classes(req: Request, res: Response) {
   console.log(
@@ -179,8 +176,8 @@ async function get_matches_helper(client: MongoClient, username: string) {
   const matches_cursor = client.db("matches").collection("matches")
     .find({
       "$or": [
-        {"user1":username},
-        {"user2":username}
+        { "user1": username },
+        { "user2": username }
       ]
     });
 
@@ -189,7 +186,7 @@ async function get_matches_helper(client: MongoClient, username: string) {
   matches_cursor.forEach(match => {
 
     client.db("users").collection("members")
-      .findOne({ "username": match["user1"] === username? match["user2"] : match["user1"]}, {
+      .findOne({ "username": match["user1"] === username ? match["user2"] : match["user1"] }, {
         projection: {
           "username": 1,
           "real_name": 1,
@@ -254,7 +251,7 @@ async function get_meetings_helper(client: MongoClient, user: string) {
       partner: "",
       meeting_times: {}
     };
-    
+
     const partner = meeting_object["userA" as keyof typeof meeting_object] === user ?
       meeting_object["userB" as keyof typeof meeting_object] :
       meeting_object["userA" as keyof typeof meeting_object];
@@ -352,12 +349,12 @@ export async function findPartnerAndClass(
 
   const compatible_partners: Array<Object> = [];
 
-  for(const clss in classes) {
+  for (const clss in classes) {
     const partnerCursor: FindCursor = client
       .db("users")
       .collection("members")
       .find({
-        "classes" : clss
+        "classes": clss
       })
 
     partnerCursor.forEach(partner => {

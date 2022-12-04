@@ -5,12 +5,12 @@ import session from "express-session";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { login, logout, me } from "./api/login";
 import {
-  create_meeting,
   get_notifications,
-  send_meeting_request,
+  send_meeting_request
 } from "./api/notifications";
-import { register } from "./api/register";
+import { register, username_exists } from "./api/register";
 import { search } from "./api/search";
+import { get_student } from "./api/students";
 import {
   get_compatible_partners,
   get_matches,
@@ -20,9 +20,8 @@ import {
   get_registered_classes,
   get_user,
   set_registered_classes,
-  set_user,
+  set_user
 } from "./api/users";
-import { get_student } from "./api/students";
 
 declare module "express-session" {
   interface SessionData {
@@ -85,6 +84,7 @@ const client = new MongoClient(uri, {
     app.post("/api/logout", logout);
     app.get("/api/me", me);
     app.post("/api/register", register);
+    app.get("/api/exists/:username", username_exists)
 
     /**
      * User
@@ -112,7 +112,7 @@ const client = new MongoClient(uri, {
      */
     app.get("/api/student/:studentID", get_student);
 
-app.listen(port, () => {
+    app.listen(port, () => {
       console.log(`[server]: Server is running at https://localhost:${port}`);
     });
   } catch (err) {

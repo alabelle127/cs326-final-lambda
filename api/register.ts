@@ -2,31 +2,42 @@ import { Request, Response } from "express";
 import { MongoClient } from "mongodb";
 import { MiniCrypt } from "./miniCrypt";
 
+export async function username_exists(req: Request, res: Response) {
+  const username = req.params.username;
+  const client: MongoClient = req.app.locals.client;
+  const user = await client.db("users").collection("members").findOne({ username: username });
+  res.json({ exists: user !== null });
+}
+
 export async function register(req: Request, res: Response) {
   console.log(
     `Attempting to register new account with ${req.body.classes.length} classes and username: ${req.body.username}`
   );
-  res.json({
-    success: await attemptRegister(
-      req.app.locals.client,
-      req.body.username,
-      req.body.password,
-      req.body.real_name,
-      req.body.classes
-    ),
-  });
+  await attemptRegister(
+    res,
+    req.app.locals.client,
+    req.body.username,
+    req.body.password,
+    req.body.real_name,
+    req.body.contact,
+    req.body.description,
+    req.body.classes
+  );
 }
 
 const mc = new MiniCrypt();
 async function attemptRegister(
+  res: Response,
   client: MongoClient,
   username: string,
   password: string,
   realName: string,
+  contact: string,
+  description: string,
   classes: Array<Object>
 ) {
   if (password.length < 6) {
-    return false;
+    return res.json({ success: false });
   }
   const [salt, hash] = mc.hash(password);
   client
@@ -37,14 +48,18 @@ async function attemptRegister(
       salt: salt,
       hash: hash,
       real_name: realName,
+      contact: contact,
+      description: description,
+      private_profile: false,
+      looking_for_partner: true,
       classes: classes,
     })
     .then(() => {
       console.log("successfully registered");
-      return true;
+      return res.json({ success: true });
     })
     .catch((err) => {
       console.error(err);
-      return false;
+      return res.json({ success: false });
     });
 }
