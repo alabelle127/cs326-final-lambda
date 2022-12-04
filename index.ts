@@ -1,16 +1,13 @@
 import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import session from "express-session";
 import { MongoClient, ServerApiVersion } from "mongodb";
+import path from "path";
 import { login, logout, me } from "./api/login";
-import {
-  get_notifications,
-  send_meeting_request
-} from "./api/notifications";
+import { get_notifications, send_meeting_request } from "./api/notifications";
 import { register, username_exists } from "./api/register";
 import { search } from "./api/search";
-import { get_student } from "./api/students";
 import {
   get_compatible_partners,
   get_matches,
@@ -20,7 +17,7 @@ import {
   get_registered_classes,
   get_user,
   set_registered_classes,
-  set_user
+  set_user,
 } from "./api/users";
 
 declare module "express-session" {
@@ -68,6 +65,11 @@ const client = new MongoClient(uri, {
     // Serve HTML/js/css files
     app.use(express.static("public"));
 
+    // Student profile
+    app.get("/students/:studentID", (req: Request, res: Response) => {
+      res.sendFile(path.join(__dirname, "../public/Student.html"));
+    });
+
     /**
      * API Routes
      */
@@ -84,7 +86,7 @@ const client = new MongoClient(uri, {
     app.post("/api/logout", logout);
     app.get("/api/me", me);
     app.post("/api/register", register);
-    app.get("/api/exists/:username", username_exists)
+    app.get("/api/exists/:username", username_exists);
 
     /**
      * User
@@ -106,11 +108,6 @@ const client = new MongoClient(uri, {
     app.post("/api/notifications/:userID1/:userID2", send_meeting_request);
     app.get("/api/users/:userID/get_meetings", get_meetings);
     // app.post("/api/create_meeting", create_meeting);
-
-    /**
-     * Students
-     */
-    app.get("/api/student/:studentID", get_student);
 
     app.listen(port, () => {
       console.log(`[server]: Server is running at https://localhost:${port}`);

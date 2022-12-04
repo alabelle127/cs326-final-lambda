@@ -19,7 +19,7 @@ function getDataFromFormValues() {
 
 function setFormValuesFromData(data) {
   descriptionField.value = data.description;
-  contactField.value = data.contact;
+  contactField.value = data.contact_info;
   profilePictureField.value = data.profile_picture;
   privateProfileField.checked = data.private_profile;
   lookingField.checked = data.looking_for_partners;
@@ -52,10 +52,7 @@ getLoggedInUser().then(async (userID) => {
     });
     const success = (await r.json()).success;
     if (success) {
-      // TODO: display success message
-      profileData = saveData;
-    } else {
-      // display some error
+      window.location.reload();
     }
   });
 

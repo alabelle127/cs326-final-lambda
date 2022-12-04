@@ -1,15 +1,20 @@
 import { getLoggedInUser } from "./getLoggedInUser.js";
 
 let navbarItems = {
-  Home: "./",
-  "Find groups": "./StudentGroupFinder.html",
-  "Add/remove classes": "./register_classes.html",
+  Home: "/",
+  "Find groups": "/StudentGroupFinder.html",
+  "Add/remove classes": "/register_classes.html",
 };
 
-function generateNavbar(navbarElem, currentPage, loggedInUserID) {
+function generateNavbar(
+  navbarElem,
+  currentPage,
+  loggedInUserID,
+  profilePicURL
+) {
   navbarElem.innerHTML = `
   <div class="container-fluid">
-    <a class="navbar-brand" href="./">
+    <a class="navbar-brand" href="/">
         <!--Placeholder logo-->
         <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/3c662b51418913.58ecfcd8b6b18.png"
             alt="logo" width="30" height="30" class="d-inline-block align-text-top">
@@ -47,12 +52,12 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
       `<div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <!--Placeholder profile picture-->
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png"
+            <img src="${profilePicURL}"
                 class="rounded-circle" alt="Profile picture" width="50" height="50">
         </a>
         <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item" href="./students/${loggedInUserID}">View profile</a></li>
-            <li><a class="dropdown-item" href="./account_settings.html">Settings</a></li>
+            <li><a class="dropdown-item" href="/students/${loggedInUserID}">View profile</a></li>
+            <li><a class="dropdown-item" href="/account_settings.html">Settings</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>
@@ -77,22 +82,37 @@ function generateNavbar(navbarElem, currentPage, loggedInUserID) {
     navContentElem.insertAdjacentHTML(
       "beforeend",
       `<div>
-            <a class="btn btn-outline-primary" href="./register.html">Create account</a>
-            <a class="btn btn-primary" href="./login.html">Login</a>
+            <a class="btn btn-outline-primary" href="/register.html">Create account</a>
+            <a class="btn btn-primary" href="/login.html">Login</a>
        </div>`
     );
   }
 }
 
-getLoggedInUser().then((userID) => {
+getLoggedInUser().then(async (userID) => {
+  let profilePicURL = "";
   if (userID === null) {
     navbarItems = {
-      Home: "./",
+      Home: "/",
     };
+  } else {
+    const url = `/api/users/${userID}`;
+    const r = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await r.json();
+    if (!data.success) {
+      console.error(data.message);
+    } else {
+      profilePicURL = data.data.profile_picture;
+    }
   }
-  const currentPage = document.querySelector('meta[name="nav-name"]').content;
 
+  const currentPage = document.querySelector('meta[name="nav-name"]').content;
   for (const navbarElem of document.getElementsByClassName("navbar")) {
-    generateNavbar(navbarElem, currentPage, userID);
+    generateNavbar(navbarElem, currentPage, userID, profilePicURL);
   }
 });

@@ -5,7 +5,10 @@ import { MiniCrypt } from "./miniCrypt";
 export async function username_exists(req: Request, res: Response) {
   const username = req.params.username;
   const client: MongoClient = req.app.locals.client;
-  const user = await client.db("users").collection("members").findOne({ username: username });
+  const user = await client
+    .db("users")
+    .collection("members")
+    .findOne({ username: username });
   res.json({ exists: user !== null });
 }
 
@@ -50,8 +53,10 @@ async function attemptRegister(
       real_name: realName,
       contact: contact,
       description: description,
+      profile_picture:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
       private_profile: false,
-      looking_for_partner: true,
+      looking_for_partners: true,
       classes: classes,
     })
     .then(() => {

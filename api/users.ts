@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { FindCursor, MongoClient } from "mongodb";
+import { FindCursor, MongoClient, ObjectId } from "mongodb";
 
 export function get_registered_classes(req: Request, res: Response) {
   console.log(
@@ -97,47 +97,87 @@ export function set_registered_classes(req: Request, res: Response) {
   }
 }
 
-export function get_user(req: Request, res: Response) {
+export async function get_user(req: Request, res: Response) {
   console.log(
     `Received API request to get user data ${req.params.userID}, by user ${req.session.userID}`
   );
+  const client: MongoClient = req.app.locals.client;
   const userID = req.params.userID;
 
-  // Check if authorized to access this data
-  // Placeholder data
-  const privateProfile = true;
-  if (!privateProfile || req.session.userID === userID) {
+  let entry;
+  try {
+    entry = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const privateProfile = entry["private_profile"];
+
+  if (!privateProfile || req.session.userID === req.params.userID) {
+    // return all data if public profile or current user's data
     res.json({
       success: true,
       data: {
-        username: "gkcho",
-        real_name: "Gavin Cho",
-        userID: 1001,
-        profile_picture:
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
-        description: "Senior CS & Math major",
-        contact_info: "Call or text me 413-555-5555",
-        looking_for_partners: true,
-        private_profile: true,
+        username: entry["username"],
+        profile_picture: entry["profile_picture"],
+        real_name: entry["real_name"],
+        description: entry["description"],
+        contact_info: entry["contact"],
+        looking_for_partners: entry["looking_for_partners"],
+        currentCourses: entry["classes"],
+        previousCourses: [],
+        partners: [],
       },
     });
   } else {
-    res.status(401).json({
-      success: false,
-      message: "User's profile is private",
+    // return only public data
+    res.json({
+      success: true,
+      data: {
+        username: entry["username"],
+        profile_picture: entry["profile_picture"],
+      },
     });
   }
 }
 
-export function set_user(req: Request, res: Response) {
+export async function set_user(req: Request, res: Response) {
   console.log(
     `Received API request to set user data ${req.params.userID}, by user ${req.session.userID}`
   );
   const userID = req.params.userID;
+  const client: MongoClient = req.app.locals.client;
   // Check if authorized to modify this data
-  // Placeholder data
-  const privateProfile = true;
   if (req.session.userID === userID) {
+    await client
+      .db("users")
+      .collection("members")
+      .updateOne(
+        { _id: new ObjectId(userID) },
+        {
+          $set: {
+            description: req.body.description,
+            contact: req.body.contact,
+            profile_picture: req.body.profile_picture,
+            private_profile: req.body.private_profile,
+            looking_for_partners: req.body.looking_for_partners,
+          },
+        }
+      );
     res.json({
       success: true,
     });
@@ -165,44 +205,47 @@ export async function get_compatible_partners(req: Request, res: Response) {
 
   res.json({
     success: true,
-    data: await findPartnerAndClass(
-      req.app.locals.client,
-      req.body.classes
-    )
+    data: await findPartnerAndClass(req.app.locals.client, req.body.classes),
   });
 }
 
 async function get_matches_helper(client: MongoClient, username: string) {
-  const matches_cursor = client.db("matches").collection("matches")
+  const matches_cursor = client
+    .db("matches")
+    .collection("matches")
     .find({
-      "$or": [
-        { "user1": username },
-        { "user2": username }
-      ]
+      $or: [{ user1: username }, { user2: username }],
     });
 
-  const matches: Array<Object> = []
+  const matches: Array<Object> = [];
 
-  matches_cursor.forEach(match => {
-
-    client.db("users").collection("members")
-      .findOne({ "username": match["user1"] === username ? match["user2"] : match["user1"] }, {
-        projection: {
-          "username": 1,
-          "real_name": 1,
-          "classes": 1
+  matches_cursor.forEach((match) => {
+    client
+      .db("users")
+      .collection("members")
+      .findOne(
+        {
+          username:
+            match["user1"] === username ? match["user2"] : match["user1"],
+        },
+        {
+          projection: {
+            username: 1,
+            real_name: 1,
+            classes: 1,
+          },
         }
-      })
-      .then(user => {
+      )
+      .then((user) => {
         if (user) {
           matches.push({
-            "username": user["username"],
-            "real_name": user["real_name"],
-            "classes": user["classes"]
+            username: user["username"],
+            real_name: user["real_name"],
+            classes: user["classes"],
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   });
@@ -221,10 +264,7 @@ export async function get_matches(req: Request, res: Response) {
   if (req.session.userID === userID) {
     res.json({
       success: true,
-      data: await get_matches_helper(
-        req.app.locals.client,
-        req.body.username
-      ),
+      data: await get_matches_helper(req.app.locals.client, req.body.username),
     });
   } else {
     res.status(401).json({
@@ -235,28 +275,28 @@ export async function get_matches(req: Request, res: Response) {
 }
 
 async function get_meetings_helper(client: MongoClient, user: string) {
-  const meetings_cursor = client.db("users").collection("meetings")
+  const meetings_cursor = client
+    .db("users")
+    .collection("meetings")
     .find({
-      "$or": [
-        { "userA": user, },
-        { "userB": user }
-      ]
+      $or: [{ userA: user }, { userB: user }],
     });
 
   const meetings = Array.prototype;
 
-
-  meetings_cursor.forEach(meeting_object => {
+  meetings_cursor.forEach((meeting_object) => {
     const meeting = {
       partner: "",
-      meeting_times: {}
+      meeting_times: {},
     };
 
-    const partner = meeting_object["userA" as keyof typeof meeting_object] === user ?
-      meeting_object["userB" as keyof typeof meeting_object] :
-      meeting_object["userA" as keyof typeof meeting_object];
+    const partner =
+      meeting_object["userA" as keyof typeof meeting_object] === user
+        ? meeting_object["userB" as keyof typeof meeting_object]
+        : meeting_object["userA" as keyof typeof meeting_object];
 
-    const meeting_times = meeting_object["meeting_times" as keyof typeof meeting_object];
+    const meeting_times =
+      meeting_object["meeting_times" as keyof typeof meeting_object];
 
     meeting["partner"] = partner;
     meeting["meeting_times"] = meeting_times;
@@ -278,10 +318,7 @@ export async function get_meetings(req: Request, res: Response) {
   if (!privateProfile || req.session.userID === userID) {
     res.json({
       success: true,
-      data: await get_matches_helper(
-        req.app.locals.client,
-        req.body.username
-      ),
+      data: await get_matches_helper(req.app.locals.client, req.body.username),
     });
   } else {
     res.status(401).json({
@@ -346,7 +383,6 @@ export async function findPartnerAndClass(
   client: MongoClient,
   classes: Array<Object>
 ) {
-
   const compatible_partners: Array<Object> = [];
 
   for (const clss in classes) {
@@ -354,15 +390,15 @@ export async function findPartnerAndClass(
       .db("users")
       .collection("members")
       .find({
-        "classes": clss
-      })
+        classes: clss,
+      });
 
-    partnerCursor.forEach(partner => {
+    partnerCursor.forEach((partner) => {
       compatible_partners.push({
-        "username": partner["username"],
-        "real_name": partner["real_name"],
-        "classes": partner["classes"]
-      })
+        username: partner["username"],
+        real_name: partner["real_name"],
+        classes: partner["classes"],
+      });
     });
   }
 
