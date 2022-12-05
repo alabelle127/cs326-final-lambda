@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { FindCursor, MongoClient, ObjectId } from "mongodb";
 
+// TODO
 export function get_registered_classes(req: Request, res: Response) {
   console.log(
     `Received API request to get registered classes for user ${req.params.userID}, by user ${req.session.userID}`
@@ -77,6 +78,7 @@ export function get_registered_classes(req: Request, res: Response) {
   }
 }
 
+// TODO
 export function set_registered_classes(req: Request, res: Response) {
   const newClasses = req.body.classes;
   console.log(

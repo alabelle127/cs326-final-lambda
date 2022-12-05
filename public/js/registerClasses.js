@@ -1,5 +1,51 @@
 import { getLoggedInUser } from "./getLoggedInUser.js";
 
+function timeToStr(time) {
+  if (time >= 1300) {
+    time -= 1200;
+  }
+  const timeStr = `${time}`;
+  return timeStr.substring(0, 2) + ":" + timeStr.substring(2);
+}
+
+function daysToStr(days) {
+  const DAYS = {
+    Mo: "mon",
+    Tu: "tue",
+    We: "wed",
+    Th: "thu",
+    Fr: "fri",
+    Sa: "sat",
+    Su: "sun",
+  };
+  let dayStr = "";
+  for (const day of Object.keys(DAYS)) {
+    if (days[DAYS[day]]) {
+      dayStr += day;
+    }
+  }
+  return dayStr;
+}
+
+function classDisplayText(classData) {
+  const shortName = classData.class.subject.id + " " + classData.class.number;
+  const instructors = classData.instructors
+    .map((instructor) => instructor.name.split(" ").pop())
+    .join(",");
+  const id = classData.name.id;
+  let times = "";
+  if (classData.meeting_times !== null) {
+    times += daysToStr(classData.meeting_times.days) + " ";
+    times +=
+      timeToStr(classData.meeting_times.startTime) +
+      "-" +
+      timeToStr(classData.meeting_times.endTime);
+    times += " ";
+  }
+
+  return `${shortName} (${instructors}) ${times}[${id}]`;
+}
+
 function renderClassList(
   listElem,
   classItems,
@@ -33,7 +79,7 @@ function renderClassList(
         onClassSelected(0);
       }
       classItemElem.appendChild(
-        document.createTextNode(classItemData.display_text)
+        document.createTextNode(classDisplayText(classItemData))
       );
       listElem.appendChild(classItemElem);
 
