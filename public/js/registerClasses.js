@@ -228,7 +228,10 @@ getLoggedInUser().then(async (userID) => {
           classes: classes.map((classData) => classData._id),
         }),
       });
-      await r.json();
+      const success = (await r.json()).success;
+      if (success) {
+        window.location.reload();
+      }
     });
   }
 });
