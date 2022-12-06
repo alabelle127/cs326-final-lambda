@@ -1,96 +1,89 @@
 import { Request, Response } from "express";
 import { FindCursor, MongoClient, ObjectId } from "mongodb";
 
-// TODO
-export function get_registered_classes(req: Request, res: Response) {
+export async function get_registered_classes(req: Request, res: Response) {
   console.log(
     `Received API request to get registered classes for user ${req.params.userID}, by user ${req.session.userID}`
   );
+  const client: MongoClient = req.app.locals.client;
   const userID = req.params.userID;
-  // Check if authorized to access this data
-  // Placeholder data
-  const privateProfile = true;
-  if (!privateProfile || req.session.userID === userID) {
+
+  let entry;
+  try {
+    entry = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const privateProfile = entry.private_profile;
+  if (!privateProfile || req.session.userID === req.params.userID) {
+    const classIDs = entry.classes;
+    const classes = await client
+      .db("classes")
+      .collection("2022 Fall")
+      .find({
+        _id: {
+          $in: classIDs.map((classID: string) => new ObjectId(classID)),
+        },
+      })
+      .toArray();
     res.json({
       success: true,
-      data: [
-        {
-          display_text: "CS 453 (Not current)",
-          current: false,
-          department: "CS",
-          class_number: 453,
-          class_perma_id: "NC-CS453",
-        },
-        {
-          display_text: "CS 326 (Berger) TuTh 1:00-2:15 [44866]",
-          current: true,
-          department: "CS",
-          class_number: 326,
-          class_id: 44866,
-          class_perma_id: "2022F-44866",
-          professor: "Emery Berger",
-          meeting_times: [
-            {
-              day: "Tu",
-              start_time: 1300,
-              end_time: 1415,
-            },
-            {
-              day: "Th",
-              start_time: 1300,
-              end_time: 1415,
-            },
-          ],
-        },
-        {
-          display_text: "MATH 551 (Johnston) MoWeFr 10:10-11:00 [01001]",
-          current: true,
-          department: "MATH",
-          class_number: 551,
-          class_id: 1001,
-          class_perma_id: "2022F-01001",
-          professor: "Hans Johnston",
-          meeting_times: [
-            {
-              day: "Mo",
-              start_time: 1010,
-              end_time: 1100,
-            },
-            {
-              day: "We",
-              start_time: 1010,
-              end_time: 1100,
-            },
-            {
-              day: "Fr",
-              start_time: 1010,
-              end_time: 1100,
-            },
-          ],
-        },
-      ],
+      data: classes,
     });
   } else {
     res.status(401).json({
       success: false,
-      message: "User's profile is private",
+      message: "Unauthorized",
     });
   }
 }
 
-// TODO
-export function set_registered_classes(req: Request, res: Response) {
+export async function set_registered_classes(req: Request, res: Response) {
   const newClasses = req.body.classes;
   console.log(
     `Received API request to set registered classes to: ${newClasses}`
   );
+
+  const client: MongoClient = req.app.locals.client;
   const userID = req.params.userID;
-  // Check if authorized to change this data
+
   if (req.session.userID === userID) {
-    // Change data
-    res.json({
-      success: true,
-    });
+    try {
+      await client
+        .db("users")
+        .collection("members")
+        .updateOne(
+          { _id: new ObjectId(userID) },
+          {
+            $set: {
+              classes: newClasses,
+            },
+          }
+        );
+      return res.json({
+        success: true,
+      });
+    } catch {
+      return res.status(502).json({
+        success: false,
+        message: "Error setting classes",
+      });
+    }
   } else {
     res.status(401).json({
       success: false,
@@ -127,20 +120,20 @@ export async function get_user(req: Request, res: Response) {
     return;
   }
 
-  const privateProfile = entry["private_profile"];
+  const privateProfile = entry.private_profile;
 
   if (!privateProfile || req.session.userID === req.params.userID) {
     // return all data if public profile or current user's data
     res.json({
       success: true,
       data: {
-        username: entry["username"],
-        profile_picture: entry["profile_picture"],
-        real_name: entry["real_name"],
-        description: entry["description"],
-        contact_info: entry["contact"],
-        looking_for_partners: entry["looking_for_partners"],
-        currentCourses: entry["classes"],
+        username: entry.username,
+        profile_picture: entry.profile_picture,
+        real_name: entry.real_name,
+        description: entry.description,
+        contact_info: entry.contact,
+        looking_for_partners: entry.looking_for_partners,
+        currentCourses: entry.classes,
         previousCourses: [],
         partners: [],
       },
@@ -150,8 +143,8 @@ export async function get_user(req: Request, res: Response) {
     res.json({
       success: true,
       data: {
-        username: entry["username"],
-        profile_picture: entry["profile_picture"],
+        username: entry.username,
+        profile_picture: entry.profile_picture,
       },
     });
   }

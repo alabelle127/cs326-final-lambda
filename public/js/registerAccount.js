@@ -19,12 +19,14 @@ firstPageButtonElem.addEventListener("click", async (event) => {
     setValidationError("Password must be at least 6 characters long");
     return;
   }
-  if (Math.min(
-    formData.get("realName").length,
-    formData.get("username").length,
-    formData.get("contact").length,
-    formData.get("description").length) === 0) {
-
+  if (
+    Math.min(
+      formData.get("realName").length,
+      formData.get("username").length,
+      formData.get("contact").length,
+      formData.get("description").length
+    ) === 0
+  ) {
     setValidationError("One or more fields are not filled out");
     return;
   }
@@ -33,7 +35,7 @@ firstPageButtonElem.addEventListener("click", async (event) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
+    },
   });
   const { exists } = await r.json();
   if (exists) {
@@ -58,13 +60,13 @@ registerButtonElem.addEventListener("click", async () => {
       real_name: formData.get("realName"),
       contact: formData.get("contact"),
       description: formData.get("description"),
-      classes: window.classes,
+      classes: window.classes.map((classData) => classData._id),
     }),
   });
   const { success } = await r.json();
   if (success) {
     window.location.replace("/");
   } else {
-    console.error("Error while registering")
+    console.error("Error while registering");
   }
 });

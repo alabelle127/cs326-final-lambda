@@ -226,7 +226,7 @@ getLoggedInUser().then(async (userID) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          classes: classes,
+          classes: classes.map((classData) => classData._id),
         }),
       });
       await r.json();
