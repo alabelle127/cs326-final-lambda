@@ -4,8 +4,8 @@ function timeToStr(time) {
   if (time >= 1300) {
     time -= 1200;
   }
-  const timeStr = `${time}`;
-  return timeStr.substring(0, 2) + ":" + timeStr.substring(2);
+  const timeStr = `${time}`.padStart(4, "0");
+  return parseInt(timeStr.substring(0, 2)) + ":" + timeStr.substring(2);
 }
 
 function daysToStr(days) {
@@ -32,7 +32,6 @@ function classDisplayText(classData) {
   const instructors = classData.instructors
     .map((instructor) => instructor.name.split(" ").pop())
     .join(",");
-  const id = classData.name.id;
   let times = "";
   if (classData.meeting_times !== null) {
     times += daysToStr(classData.meeting_times.days) + " ";
@@ -43,7 +42,7 @@ function classDisplayText(classData) {
     times += " ";
   }
 
-  return `${shortName} (${instructors}) ${times}[${id}]`;
+  return `${shortName} (${instructors}) ${times}[${classData.name.number}-${classData.name.type}]`;
 }
 
 function renderClassList(

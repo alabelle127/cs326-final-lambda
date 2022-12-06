@@ -11,20 +11,38 @@ export async function search(req: Request, res: Response) {
     .aggregate([
       {
         $search: {
-          index: "default",
-          text: {
-            query: query,
-            path: {
-              wildcard: "*",
-            },
+          index: "static",
+          compound: {
+            should: [
+              {
+                text: {
+                  query: query,
+                  path: [
+                    "class.number",
+                    "class.subject.id",
+                    "class.subject.name",
+                    "instructors.name",
+                    "name.id",
+                    "name.type",
+                  ],
+                  synonyms: "mySynonyms",
+                },
+              },
+              {
+                text: {
+                  query: query,
+                  path: "class.name",
+                  score: { boost: { value: 0.5 } }, // make class name less important
+                },
+              },
+            ],
           },
         },
       },
       {
-        $limit: 10,
+        $limit: 15,
       },
     ])
     .toArray();
-  console.log(responseData);
   res.json(responseData);
 }

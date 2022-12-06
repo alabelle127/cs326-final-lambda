@@ -137,7 +137,7 @@ function parseClassIDString(str) {
   return {
     number: match[1],
     type: match[2],
-    id: parseInt(match[3]),
+    id: match[3],
   };
 }
 
