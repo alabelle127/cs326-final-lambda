@@ -42,7 +42,7 @@ function classDisplayText(classData) {
     times += " ";
   }
 
-  return `${shortName} (${instructors}) ${times}[${classData.name.number}-${classData.name.type}]`;
+  return `${shortName} (${instructors}) ${times}[${classData.name.number}-${classData.name.type}-${classData.name.id}]`;
 }
 
 function renderClassList(

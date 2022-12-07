@@ -25,7 +25,8 @@ export async function search(req: Request, res: Response) {
                     "name.id",
                     "name.type",
                   ],
-                  synonyms: "mySynonyms",
+                  // synonyms: "mySynonyms",
+                  // Unfortunately this doesn't work (see https://www.mongodb.com/community/forums/t/synonym-search-not-working-when-searching-for-phrase/144068)
                 },
               },
               {
