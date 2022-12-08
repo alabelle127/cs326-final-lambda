@@ -2,6 +2,7 @@ import MongoStore from "connect-mongo";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import session from "express-session";
+import { Auth } from "googleapis";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import path from "path";
 import { get_google_auth_url, handle_google_auth_redirect } from "./api/google";
@@ -18,12 +19,13 @@ import {
   get_registered_classes,
   get_user,
   set_registered_classes,
-  set_user
+  set_user,
 } from "./api/users";
 
 declare module "express-session" {
   interface SessionData {
     userID: string | null;
+    credentials: Auth.Credentials | undefined;
   }
 }
 

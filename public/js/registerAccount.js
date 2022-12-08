@@ -78,9 +78,13 @@ registerButtonElem.addEventListener("click", async () => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-    }
+    },
   });
   const google_url = (await r.json()).url;
   googleAuthButtonElem.href = google_url;
   googleAuthButtonElem.classList.remove("disabled");
 })();
+
+googleAuthButtonElem.addEventListener("click", () => {
+  googleAuthButtonElem.classList.add("disabled");
+});

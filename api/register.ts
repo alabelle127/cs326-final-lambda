@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { MongoClient } from "mongodb";
+import { Auth } from "googleapis";
+import { MongoClient, ObjectId } from "mongodb";
+import { createGoogleCalendar } from "./google";
 import { MiniCrypt } from "./miniCrypt";
 
 export async function username_exists(req: Request, res: Response) {
@@ -24,7 +26,8 @@ export async function register(req: Request, res: Response) {
     req.body.real_name,
     req.body.contact,
     req.body.description,
-    req.body.classes
+    req.body.classes,
+    req.session.credentials
   );
 }
 
@@ -37,16 +40,31 @@ async function attemptRegister(
   realName: string,
   contact: string,
   description: string,
-  classes: Array<Object>
+  classes: Array<string>,
+  credentials: Auth.Credentials | undefined
 ) {
   if (password.length < 6) {
     return res.json({ success: false });
   }
   const [salt, hash] = mc.hash(password);
-  client
-    .db("users")
-    .collection("members")
-    .insertOne({
+  try {
+    // create google calendar
+    let calendarURL = "";
+    if (credentials !== undefined) {
+      // fetch classes
+      const classObjects = await client
+        .db("classes")
+        .collection("2022 Fall")
+        .find({
+          _id: {
+            $in: classes.map((classID: string) => new ObjectId(classID)),
+          },
+        })
+        .toArray();
+      calendarURL = await createGoogleCalendar(classObjects, credentials);
+    }
+    // insert into db
+    await client.db("users").collection("members").insertOne({
       username: username,
       salt: salt,
       hash: hash,
@@ -58,13 +76,11 @@ async function attemptRegister(
       private_profile: false,
       looking_for_partners: true,
       classes: classes,
-    })
-    .then(() => {
-      console.log("successfully registered");
-      return res.json({ success: true });
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.json({ success: false });
+      google_credentials: credentials,
     });
+    return res.json({ success: true, url: calendarURL });
+  } catch (err) {
+    console.error(err);
+    return res.json({ success: false });
+  }
 }
