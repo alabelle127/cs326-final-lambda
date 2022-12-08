@@ -4,6 +4,7 @@ import express, { Express, Request, Response } from "express";
 import session from "express-session";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import path from "path";
+import { get_google_auth_url, handle_google_auth_redirect } from "./api/google";
 import { login, logout, me } from "./api/login";
 import { get_notifications, send_meeting_request } from "./api/notifications";
 import { register, username_exists } from "./api/register";
@@ -17,7 +18,7 @@ import {
   get_registered_classes,
   get_user,
   set_registered_classes,
-  set_user,
+  set_user
 } from "./api/users";
 
 declare module "express-session" {
@@ -73,6 +74,12 @@ const client = new MongoClient(uri, {
     /**
      * API Routes
      */
+
+    /**
+     * Google
+     */
+    app.get("/api/google_auth_url", get_google_auth_url);
+    app.get("/api/google_auth", handle_google_auth_redirect);
 
     /**
      * Search

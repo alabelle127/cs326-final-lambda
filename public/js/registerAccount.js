@@ -1,6 +1,7 @@
 const firstPageButtonElem = document.getElementById("page-1-button");
 const registerButtonElem = document.getElementById("register-btn");
 const errorAlertElem = document.getElementById("error-alert");
+const googleAuthButtonElem = document.getElementById("google-auth-btn");
 
 function setValidationError(error) {
   errorAlertElem.replaceChildren(document.createTextNode(error));
@@ -44,7 +45,7 @@ firstPageButtonElem.addEventListener("click", async (event) => {
   }
   incTab();
 });
-// TODO: google authentication
+
 registerButtonElem.addEventListener("click", async () => {
   const formData = new FormData(document.getElementById("register-form"));
   const url = `/api/register`;
@@ -70,3 +71,16 @@ registerButtonElem.addEventListener("click", async () => {
     console.error("Error while registering");
   }
 });
+
+(async () => {
+  const url = `/api/google_auth_url`;
+  const r = await fetch(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    }
+  });
+  const google_url = (await r.json()).url;
+  googleAuthButtonElem.href = google_url;
+  googleAuthButtonElem.classList.remove("disabled");
+})();
