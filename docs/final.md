@@ -441,6 +441,105 @@ Set user data. Requested user must be self.
 ## Incoming Notifications/Match requests (TODO)
 ## User's Current Meetings (TODO)
 # Database
+## 2022 Fall Classes Collection
+UMass Fall 2022 semester classes, scraped from SPIRE.
+**Example document**
+```json
+{
+  "_id": {
+    "$oid": "6377d9545a9fa1629b0b2cbd"
+  },
+  "class": {
+    "subject": {
+      "id": "AEROSPAC",
+      "name": "Aerospace Studies"
+    },
+    "number": "335",
+    "name": "Leading People and Effective Communication I"
+  },
+  "name": {
+    "number": "01LL",
+    "type": "LAB",
+    "id": "42602"
+  },
+  "instructors": [
+    {
+      "name": "Lucas Hall",
+      "email": "lucashall@umass.edu"
+    },
+    {
+      "name": "Darrick Dwyer",
+      "email": "djdwyer@umass.edu"
+    }
+  ],
+  "meeting_times": {
+    "days": {
+      "mon": true,
+      "tue": false,
+      "wed": false,
+      "thu": false,
+      "fri": false,
+      "sat": false,
+      "sun": false
+    },
+    "startTime": {
+      "$numberInt": "830"
+    },
+    "endTime": {
+      "$numberInt": "1130"
+    }
+  },
+  "room": "Dickinson Hall room 216"
+}
+```
+## Members Collection
+Registered users.
+**Example document**
+```json
+{
+  "_id": {
+    "$oid": "63940f91f47ae47dca683f1b"
+  },
+  "username": "gavin3000",
+  "salt": "258044fec20da92826061dbb511b25a7",
+  "hash": "3e97ec1f34c38b0225cc9e4c1e989a24a425227db5a0f50bfee280036e994998b33c9aaf5be13176cb46e86f7c588840c1fb0ebd9125130241173ab9cda04e7f",
+  "real_name": "Gavin",
+  "contact": "555-5555",
+  "description": "CS & Math major",
+  "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
+  "private_profile": false,
+  "looking_for_partners": true,
+  "classes": [
+    "6377da885a9fa1629b0b3447"
+  ],
+  "google_credentials": {
+    "access_token": "(redacted)",
+    "refresh_token": "(redacted)",
+    "scope": "https://www.googleapis.com/auth/calendar",
+    "token_type": "Bearer",
+    "expiry_date": {
+      "$numberDouble": "1.6706512905580E+12"
+    }
+  }
+}
+```
+## Session Collection
+Currently logged in user sessions.
+**Example document**
+```json
+{
+  "_id": "qFUD6TxWCCjllyYm0W9PGvJodLamrvBz",
+  "expires": {
+    "$date": {
+      "$numberLong": "1671313209536"
+    }
+  },
+  "session": "{\"cookie\":{\"originalMaxAge\":604800000,\"expires\":\"2022-12-17T00:44:18.835Z\",\"httpOnly\":true,\"path\":\"/\"},\"userID\":\"6393d654edc7c4e145be02e7\"}"
+}
+```
+## Matches Collection (TODO)
+## Meetings Collection (TODO)
+## Notifications Collection (TODO)
 # Authentication/Authorization
 # Division of Labor
 # Conclusion
