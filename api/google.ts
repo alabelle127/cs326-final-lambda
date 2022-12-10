@@ -11,7 +11,7 @@ function createOAuthClient() {
   return new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
     process.env.GOOGLE_CLIENT_SECRET,
-    "http://localhost:8080/api/google_auth"
+    "https://team-lambda-final.herokuapp.com/api/google_auth"
   );
 }
 
