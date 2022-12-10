@@ -434,6 +434,48 @@ Set user data. Requested user must be self.
   "message": "Not authorized"
 }
 ```
+## Get Google authentication URL
+
+Get URL which allows user to login to their Google account so that a calendar can be created with their class schedule. After a user logs in, redirects to `/api/google_auth`.
+
+**URL** : `/api/google_auth_url`
+
+**Method** : `GET`
+
+### Success Response
+
+**Example**
+
+```json
+{
+  "url": "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&client_id=(redacted)&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fgoogle_auth&service=lso&o2v=2&flowName=GeneralOAuthFlow" 
+}
+```
+
+### Success Response (Private profile)
+
+**Example**
+
+```json
+{
+  "success": true,
+  "data": {
+    "username": "gavin",
+    "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
+  }
+}
+```
+
+### Error Response
+
+**Example**
+
+```json
+{
+  "success": false,
+  "message": "Student does not exist"
+}
+```
 ## List of Compatible Partners (TODO)
 ## Return Incoming Matches for User (TODO)
 ## Sending Match request from user 1 to user 2 (TODO)
@@ -543,4 +585,14 @@ Currently logged in user sessions.
 # Authentication/Authorization
 Authentication for login is implemented with the miniCrypt.js library (ported to TypeScript), generally following the example provided from class. When a user is logged in a session is created in the database so if a user leaves the page and comes back they will still be logged in. The session is used to check what logged in user is making an API request. So sensitive API calls such as changing a user's profile picture only succeed if the user making the request is the same as the user whose profile picture is being changed. When viewing a user's profile, if the user has a private profile and the viewer is not the user itself, only the user's username and profile picture will be visible. No user has more permissions than any other user.
 # Division of Labor
+**Gavin:**
+- User login (wireframes, frontend, and backend)
+- Register new user (wireframes, frontend, and backend)
+- Add/remove/search classes (wireframes, frontend, and backend)
+- Create class schedule in Google Calendar (and handle Google authentication)
+- Scrape SPIRE for class data
+
+**Andrew: TODO**
+
+**Chris: TODO**
 # Conclusion
