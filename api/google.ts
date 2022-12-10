@@ -86,7 +86,8 @@ async function createClassEvent(
 
 async function promiseAllInBatches(
   items: Array<Promise<any>>,
-  batchSize: number
+  batchSize: number,
+  timeout: number
 ) {
   let position = 0;
   let results: Array<any> = [];
@@ -94,6 +95,8 @@ async function promiseAllInBatches(
     const itemsForBatch = items.slice(position, position + batchSize);
     results = [...results, ...(await Promise.all(itemsForBatch))];
     position += batchSize;
+    // sleep
+    await new Promise((r) => setTimeout(r, timeout));
   }
   return results;
 }
@@ -147,5 +150,5 @@ export async function createGoogleCalendar(
     }
   }
 
-  await promiseAllInBatches(promises, 4);
+  await promiseAllInBatches(promises, 2, 1000);
 }
