@@ -1,11 +1,11 @@
 # Team Lambda: Study Buddies (Fall 2022 Semester)
-# Overview
+# Overview (TODO)
 Study Buddies is a web application to help UMass student find partners to study with. 
 # Team Members
 -   Andrew LaBelle ([https://github.com/alabelle127](https://github.com/alabelle127))
 -   Gavin Cho ([https://github.com/gavin-k-cho](https://github.com/gavin-k-cho))
 -   Chris Manning ([https://github.com/KaenCS](https://github.com/KaenCS))
-# User Interface
+# User Interface (TODO)
 # APIs/URL Routes
 
 ## Search
@@ -595,4 +595,4 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 **Andrew: TODO**
 
 **Chris: TODO**
-# Conclusion
+# Conclusion (TODO)
