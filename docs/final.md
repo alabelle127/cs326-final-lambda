@@ -541,5 +541,6 @@ Currently logged in user sessions.
 ## Meetings Collection (TODO)
 ## Notifications Collection (TODO)
 # Authentication/Authorization
+Authentication for login is implemented with the miniCrypt.js library (ported to TypeScript), generally following the example provided from class. When a user is logged in a session is created in the database so if a user leaves the page and comes back they will still be logged in. The session is used to check what logged in user is making an API request. So sensitive API calls such as changing a user's profile picture only succeed if the user making the request is the same as the user whose profile picture is being changed. When viewing a user's profile, if the user has a private profile and the viewer is not the user itself, only the user's username and profile picture will be visible. No user has more permissions than any other user.
 # Division of Labor
 # Conclusion
