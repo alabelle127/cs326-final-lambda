@@ -49,7 +49,6 @@ async function attemptRegister(
   const [salt, hash] = mc.hash(password);
   try {
     // create google calendar
-    let calendarURL = "";
     if (credentials !== undefined) {
       // fetch classes
       const classObjects = await client
@@ -61,7 +60,7 @@ async function attemptRegister(
           },
         })
         .toArray();
-      calendarURL = await createGoogleCalendar(classObjects, credentials);
+      await createGoogleCalendar(classObjects, credentials);
     }
     // insert into db
     await client.db("users").collection("members").insertOne({
@@ -78,7 +77,7 @@ async function attemptRegister(
       classes: classes,
       google_credentials: credentials,
     });
-    return res.json({ success: true, url: calendarURL });
+    return res.json({ success: true });
   } catch (err) {
     console.error(err);
     return res.json({ success: false });
