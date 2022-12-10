@@ -485,7 +485,9 @@ Get URL which allows user to login to their Google account so that a calendar ca
 # Database
 ## 2022 Fall Classes Collection
 UMass Fall 2022 semester classes, scraped from SPIRE.
+
 **Example document**
+
 ```json
 {
   "_id": {
@@ -536,7 +538,9 @@ UMass Fall 2022 semester classes, scraped from SPIRE.
 ```
 ## Members Collection
 Registered users.
+
 **Example document**
+
 ```json
 {
   "_id": {
@@ -567,7 +571,9 @@ Registered users.
 ```
 ## Session Collection
 Currently logged in user sessions.
+
 **Example document**
+
 ```json
 {
   "_id": "qFUD6TxWCCjllyYm0W9PGvJodLamrvBz",
