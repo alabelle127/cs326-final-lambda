@@ -1,6 +1,6 @@
 # Team Lambda: Study Buddies (Fall 2022 Semester)
-# Overview (TODO)
-Study Buddies is a web application to help UMass student find partners to study with. 
+# Overview 
+Study Buddies is a web application to help UMass student find partners to study with. In which students can create accounts to fill out with current courses and previous courses they have taken to match with other students using our algorithm to guarantee relavant students can find each other. after finding other students you have the ability to invite them and create a study group and set up times to study for your courses. And if you are feeling particularly adventurousyou can even look for individual students if you happen to know their id, but only if they allow it since we should respect one anothers privacy. you can also just browse for a group thats already been formed with our very own group finder.  
 # Team Members
 -   Andrew LaBelle ([https://github.com/alabelle127](https://github.com/alabelle127))
 -   Gavin Cho ([https://github.com/gavin-k-cho](https://github.com/gavin-k-cho))
@@ -585,9 +585,49 @@ Currently logged in user sessions.
   "session": "{\"cookie\":{\"originalMaxAge\":604800000,\"expires\":\"2022-12-17T00:44:18.835Z\",\"httpOnly\":true,\"path\":\"/\"},\"userID\":\"6393d654edc7c4e145be02e7\"}"
 }
 ```
-## Matches Collection (TODO)
-## Meetings Collection (TODO)
-## Notifications Collection (TODO)
+## Matches Collection
+```json
+{
+  "_id": "ObjectId('637982c7c929c60f93db065a')"
+  "user1": "brian"
+  "user2": "mark"
+},
+```
+## Meetings Collection
+```json
+{
+  "_id": "ObjectId('637acb1b05189442bf844bb5')"
+  "userA": "Walter"
+  "userB": "Jesse"
+  "meeting_times": Object
+    "fri": "Array"
+      "0": "Object"
+    "mon": "Array"
+      "0": "Object"
+        "startTime": 1800
+        "endTime": 2400
+    "sat": Array
+      "0": Object
+    "sun": Array
+      "0": Object
+    "thu": Array
+      "0": Object
+    "tue": Array
+      "0": Object
+    "wed": Array
+      "0": Object
+},
+```
+## Notifications Collection
+```json
+{
+  "_id": "ObjectId('63798e380d2cb3075765f4dc')"
+  "studentID": "Student0"
+  "notifs": Array
+    "0": "CSMajor123"
+    "1": "MathMajor456"
+},
+```
 # Authentication/Authorization
 Authentication for login is implemented with the miniCrypt.js library (ported to TypeScript), generally following the example provided from class. When a user is logged in a session is created in the database so if a user leaves the page and comes back they will still be logged in. The session is used to check what logged in user is making an API request. So sensitive API calls such as changing a user's profile picture only succeed if the user making the request is the same as the user whose profile picture is being changed. When viewing a user's profile, if the user has a private profile and the viewer is not the user itself, only the user's username and profile picture will be visible. No user has more permissions than any other user.
 # Division of Labor
@@ -600,5 +640,10 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 
 **Andrew: TODO**
 
-**Chris: TODO**
+**Chris:
+- Created and maintained MongoDB database
+- Created and maintained the Heroku App (recently had to transfer ownership to Gavin for dynos)
+- Student (wireframes, frontend, and backend)
+- Group (wireframes, frontend, eventually became deprecated due to constraints)
+
 # Conclusion (TODO)
