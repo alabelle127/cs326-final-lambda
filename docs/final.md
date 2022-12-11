@@ -599,23 +599,23 @@ Currently logged in user sessions.
   "_id": "ObjectId('637acb1b05189442bf844bb5')"
   "userA": "Walter"
   "userB": "Jesse"
-  "meeting_times": Object
+  "meeting_times": "Object"
     "fri": "Array"
       "0": "Object"
     "mon": "Array"
       "0": "Object"
         "startTime": 1800
         "endTime": 2400
-    "sat": Array
-      "0": Object
-    "sun": Array
-      "0": Object
-    "thu": Array
-      "0": Object
-    "tue": Array
-      "0": Object
-    "wed": Array
-      "0": Object
+    "sat": "Array"
+      "0": "Object"
+    "sun": "Array"
+      "0": "Object"
+    "thu": "Array"
+      "0": "Object"
+    "tue": "Array"
+      "0": "Object"
+    "wed": "Array"
+      "0": "Object"
 },
 ```
 ## Notifications Collection
@@ -623,7 +623,7 @@ Currently logged in user sessions.
 {
   "_id": "ObjectId('63798e380d2cb3075765f4dc')"
   "studentID": "Student0"
-  "notifs": Array
+  "notifs": "Array"
     "0": "CSMajor123"
     "1": "MathMajor456"
 },
