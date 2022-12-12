@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { FindCursor, MongoClient, ObjectId } from "mongodb";
+import { resourceUsage } from "process";
 
 export async function get_registered_classes(req: Request, res: Response) {
   console.log(
@@ -189,19 +190,48 @@ export async function get_compatible_partners(req: Request, res: Response) {
   console.log(
     `Received API request to get list of compatible partners for user ${req.session.userID}`
   );
-  const userID = parseInt(req.params.userID);
-  if (isNaN(userID) || userID <= 0) {
-    // Invalid userID in request
-    res.status(400).json({
+
+  const client: MongoClient = req.app.locals.client;
+  const userID = req.params.userID;
+
+  let entry;
+  try {
+    entry = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID) });
+  } catch {
+    return res.status(502).json({
       success: false,
-      message: "Invalid User ID",
+      message: "Error fetching user from database",
     });
   }
 
-  res.json({
-    success: true,
-    data: await findPartnerAndClass(req.app.locals.client, req.body.classes),
-  });
+  if (entry === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const classes = entry["classes"];
+
+  const partners = await findPartnersAndClass(client, classes);
+  // console.log(`partners: ${partners}`);
+
+  if(classes.length > 0) {
+    res.json({
+      success: true,
+      // data: await findPartnersAndClass(client, classes),
+      data: partners
+    });
+  } else {
+    res.json({
+      success: false,
+      message: "User has not registered any classes"
+    });
+  }
 }
 
 async function get_matches_helper(client: MongoClient, username: string) {
@@ -253,13 +283,38 @@ export async function get_matches(req: Request, res: Response) {
   console.log(
     `Recieved API request to get list of matches for user ${req.session.userID}`
   );
+
+  const client: MongoClient = req.app.locals.client;
   const userID = req.params.userID;
+
+  let entry;
+  try {
+    entry = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const username = entry["username"];
 
   // Placeholder Data
   if (req.session.userID === userID) {
     res.json({
       success: true,
-      data: await get_matches_helper(req.app.locals.client, req.body.username),
+      data: await get_matches_helper(client, username),
     });
   } else {
     res.status(401).json({
@@ -308,12 +363,37 @@ export async function get_meetings(req: Request, res: Response) {
     `request for weekly meetings for user: ${req.params.userID}, by user ${req.session.userID}`
   );
 
+  const client: MongoClient = req.app.locals.client;
   const userID = req.params.userID;
+
+  let entry;
+  try {
+    entry = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
   const privateProfile = true;
+  const username = entry["username"];
+
   if (!privateProfile || req.session.userID === userID) {
     res.json({
       success: true,
-      data: await get_matches_helper(req.app.locals.client, req.body.username),
+      data: await get_meetings_helper(client, username),
     });
   } else {
     res.status(401).json({
@@ -373,29 +453,17 @@ export function get_previous_courses(req: Request, res: Response) {
   }
 }
 
-// Andrew (done)
-export async function findPartnerAndClass(
+export async function findPartnersAndClass(
   client: MongoClient,
-  classes: Array<Object>
+  classes: String //c is Class string
 ) {
-  const compatible_partners: Array<Object> = [];
 
-  for (const clss in classes) {
-    const partnerCursor: FindCursor = client
-      .db("users")
-      .collection("members")
-      .find({
-        classes: clss,
-      });
-
-    partnerCursor.forEach((partner) => {
-      compatible_partners.push({
-        username: partner["username"],
-        real_name: partner["real_name"],
-        classes: partner["classes"],
-      });
-    });
-  }
-
-  return compatible_partners;
+  return client
+    .db("users")
+    .collection("members")
+    .find({
+      classes : { $in: classes },
+      looking_for_partners: true
+    })
+    .toArray();
 }

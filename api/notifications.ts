@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import { me } from "./login";
 
 // Chris (done)
@@ -36,6 +36,7 @@ export async function get_notifications(req: Request, res: Response) {
   }
 }
 
+// Depreceted
 async function send_meeting_helper(client: MongoClient, userFrom: string, userTo: string) {
   client.db("users").collection("meetings")
     .insertOne({
@@ -97,15 +98,70 @@ export async function send_meeting_request(req: Request, res: Response) {
   const userID1 = req.params.userID1;
   const userID2 = req.params.userID2;
 
-  if (req.session.userID === userID1) {
-    // Send match request from user 1 to user 2
-    res.json({
+  // const from = req.body.from;
+  // const to = req.body.to;
+
+  const client = req.app.locals.client;
+
+  let entry1;
+  try {
+    entry1 = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID1) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry1 === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  let entry2;
+  try {
+    entry2 = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID2) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry2 === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const userA_name = entry1["username"];
+  const userB_name = entry2["username"];
+
+  try {
+    await client
+      .db("users")
+      .collection("meetings")
+      .insertOne(
+        { userA: userA_name, userB: userB_name},
+      );
+    return res.json({
       success: true,
     });
-  } else {
-    res.status(401).json({
+  } catch {
+    return res.status(502).json({
       success: false,
-      message: "Unauthorized",
+      message: "Error setting up meeting",
     });
   }
 }
@@ -227,19 +283,66 @@ function find_available_times(times: any[]) {
 
 // Andrew (done?)
 export async function create_meeting(req: Request, res: Response) {
-  const user1 = req.body.user1;
-  const user2 = req.body.user2;
+  const userID1 = req.params.userID1;
+  const userID2 = req.params.userID2;
+  const client = req.app.locals.client;
+
+  let entry1;
+  try {
+    entry1 = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID1) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry1 === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  let entry2;
+  try {
+    entry2 = await client
+      .db("users")
+      .collection("members")
+      .findOne({ _id: new ObjectId(userID2) });
+  } catch {
+    return res.status(502).json({
+      success: false,
+      message: "Error fetching user from database",
+    });
+  }
+
+  if (entry2 === null) {
+    res.status(404).json({
+      success: false,
+      message: "Student does not exist",
+    });
+    return;
+  }
+
+  const user1 = entry1["username"];
+  const user2 = entry2["username"];
+
   console.log(
     `Recieved API request to create a meeting between ${user1} and ${user2}`
   );
 
   const available_times_user1 = await getAvailableTimes(
-    req.app.locals.client,
+    client,
     user1
   );
 
   const available_times_user2 = await getAvailableTimes(
-    req.app.locals.client,
+    client,
     user2
   );
 
@@ -250,19 +353,26 @@ export async function create_meeting(req: Request, res: Response) {
     ]
   );
 
-  
+  // try {
+  //   await client
+  //     .db("users")
+  //     .collection("meeetings")
+  //     .updateOne(
+  //       {}
+  //     )
+  // }
 
-  if (available_times.length > 0) {
-    res.json({
-      success: true,
-      data: available_times,
-    });
-  } else {
-    res.status(401).json({
-      success: false,
-      message: "unable to find desired meeting time",
-    });
-  }
+  // if(available_times.length > 0) {
+  //   res.json({
+  //     success: true,
+  //     data: available_times,
+  //   });
+  // } else {
+  //   res.status(401).json({
+  //     success: false,
+  //     message: "unable to find desired meeting time",
+  //   });
+  // }
 }
 
 export async function helper(client: MongoClient, studentID: any) {

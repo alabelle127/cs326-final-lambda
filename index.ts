@@ -7,7 +7,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import path from "path";
 import { get_google_auth_url, handle_google_auth_redirect } from "./api/google";
 import { login, logout, me } from "./api/login";
-import { get_notifications, send_meeting_request } from "./api/notifications";
+import { get_notifications, send_meeting_request, create_meeting } from "./api/notifications";
 import { register, username_exists } from "./api/register";
 import { search } from "./api/search";
 import {
@@ -109,14 +109,13 @@ const client = new MongoClient(uri, {
     app.get("/api/users/:userID/matches", get_matches);
     app.get("/api/users/:userID/meetings", get_meetings);
     app.get("/api/users/:userID/partners", get_partners);
-
     /**
      * Meetings
      */
     app.get("/api/notifications/:userID", get_notifications);
     app.post("/api/notifications/:userID1/:userID2", send_meeting_request);
     app.get("/api/users/:userID/get_meetings", get_meetings);
-    // app.post("/api/create_meeting", create_meeting);
+    app.post("/api/notifcations/:userID1/:userID2/create_meeting", create_meeting);
 
     app.listen(port, () => {
       console.log(`[server]: Server is running at https://localhost:${port}`);
