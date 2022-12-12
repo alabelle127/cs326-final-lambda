@@ -41,8 +41,9 @@ function setDataFields(data, previousCourses, currentCourses) {
 
   currentCoursesField.innerHTML = "";
   if (data.currentCourses !== undefined) {
+    console.log(currentCourses);
     for (const c in currentCourses) {
-      currentCoursesField.innerHTML += `<li>${data.currentCourses[c]}</li>`;
+      currentCoursesField.innerHTML += `<li>${currentCourses[c]}</li>`;
     }
   }
 
@@ -52,10 +53,6 @@ function setDataFields(data, previousCourses, currentCourses) {
 }
 
 getLoggedInUser().then(async (student) => {
-  // this is being commented out for testing purposes
-  // if (student === null) {
-  //     window.location.replace("./login.html");
-  // }
 
   const url = `/api/users/${target}`;
   const r = await fetch(url, {});
@@ -84,8 +81,6 @@ getLoggedInUser().then(async (student) => {
     console.log(studentData);
     console.log(currClasses);
     console.log("break");
-    console.log(studentCurrCourses);
-    console.log(studentPrevCourses);
 
     setDataFields(studentData, studentPrevCourses, currClasses);
   });
