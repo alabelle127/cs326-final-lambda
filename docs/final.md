@@ -57,7 +57,9 @@ Change user settings.
 
 ![settings screenshot](screenshots/final/settings.png)
 
-## Partner Finder (TODO)
+## Partner Finder
+
+![Finder Page Screenshot](screenshots/final/StudentFinderPage.png)
 
 ## User Profile (TODO)
 
@@ -531,17 +533,98 @@ Get URL which allows user to login to their Google account so that a calendar ca
 }
 ```
 
-## List of Compatible Partners (TODO)
+## List of Compatible Partners
 
-## Return Incoming Matches for User (TODO)
+Gets a list of users that are taking one or more of the same classes as the current user
 
-## Sending Match request from user 1 to user 2 (TODO)
+**URL** : `/api/users/:userID/compatible_partners`
 
-## Meeting Scheduling (TODO)
+**Method** : `GET`
 
-## Incoming Notifications/Match requests (TODO)
+### Success Response
 
-## User's Current Meetings (TODO)
+**Example**
+
+```json
+{
+  "success": true,
+  "data" : "[List of compatabile partners]"
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "message": "User has not registered any classes"
+}
+```
+
+## Return Matches for User
+
+Returns a list of users a currently logged in user is matched with
+
+**URL**: `/api/users/:userID/matches`
+
+**Method**: `GET`
+
+### Success Response
+
+**Example**
+
+```json
+{
+  "success": true,
+  "data": "[List of Matches for that user]"
+}
+```
+
+### Error Response
+
+**Example**
+
+```json
+{
+  "success": false,
+  "message": "failed to get matches for user"
+}
+```
+
+## Create a match from user 1 to user 2
+
+Creates a match listing in the database from user 1 to user 2 upon clicking "invite" in finder page
+
+**URL**: `/api/notifications/:userID1/:userID2`
+
+**Method**: `POST`
+
+### Success Response
+
+**Example**
+
+```json
+{
+  "success": true,
+}
+```
+
+### Error Response
+
+**Example**
+
+```json
+{
+  "success": false,
+  "message": "Error setting up meeting"
+}
+```
+
+<!-- ## Meeting Scheduling (TODO) -->
+
+<!-- ## Incoming Notifications/Match requests (TODO) -->
+
+<!-- ## User's Current Meetings (TODO) -->
 
 # Database
 
@@ -714,7 +797,7 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 - Create class schedule in Google Calendar (and handle Google authentication)
 - Scrape SPIRE for class data
 
-**Andrew: TODO**
+**Andrew:**
 
 - Student Finder Page (wireframes, frontend, backend)
 - Allows users to match with other users via invite link on finder page for each user (frontend and backend)
@@ -727,4 +810,6 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 - Student (wireframes, frontend, and backend)
 - Group (wireframes, frontend, eventually became deprecated due to constraints)
 
-# Conclusion (TODO)
+# Conclusion
+
+This group project proved to be a challenging experience in which we had to learn many different and new concepts that we had not previously worked with before in any scenarios. Learning how to work with express js, mongo db, and other new concepts proved to be difficult at times but I do feel were fulfilling in the end. I feel as though it would have been helpful to have worked with these concepts more throughout the class to gain experience in them before working with them on a larger scale. Another major difficulty for my grouppmates was setting up and getting heroku to work effectively.

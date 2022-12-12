@@ -1,10 +1,8 @@
 import { getLoggedInUser } from "./getLoggedInUser.js";
-// const compatible_users = [];
 
 function generateUser(userJson, id, classes) {
   const name = userJson["real_name"] ?? "[name not available]";
   const username = userJson["username"] ?? "[username not available]";
-  // const classes = userJson["classes"] ?? [];
   const contact = userJson["contact"] ?? "";
   const profile_pic = userJson["profile_picture"] ?? "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png";
   const user_notes = userJson["description"] ?? "[description not available]";
@@ -71,9 +69,6 @@ getLoggedInUser().then(async (userID) => {
     return;
   }
 
-  // console.log(`compatible_users: ${JSON.stringify(compatible_users)}`);
-
-  // let i = 0;
   compatible_users.forEach( async (user) => {
     const u_userID = user["_id"].toString();
 
@@ -100,7 +95,6 @@ getLoggedInUser().then(async (userID) => {
 
     partners.insertAdjacentHTML("afterbegin", 
       generateUser(user, u_userID, string_classes)
-      // generateUser(user, i++, string_classes)
     );
 
     const invite_button = document.getElementById(
