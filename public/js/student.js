@@ -80,7 +80,7 @@ getLoggedInUser().then(async (student) => {
       currClasses[c] = getClassData(currClasses[c]);
     }
 
-    const purl = `/api/users/${userID}/compatible_partners`;
+    const purl = `/api/users/${target}/compatible_partners`;
     const parts = await fetch(purl, {
       headers: {
         Accept: "application/json",
@@ -93,7 +93,7 @@ getLoggedInUser().then(async (student) => {
     const compatible_users = (await r.json()).data ?? [];
     
     console.log(compatible_users);
-    
+
     studentCurrCourses = currClasses;
     
     console.log(studentData);
