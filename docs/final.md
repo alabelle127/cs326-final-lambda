@@ -61,7 +61,9 @@ Change user settings.
 
 ![Finder Page Screenshot](screenshots/final/StudentFinderPage.png)
 
-## User Profile (TODO)
+## User Profile
+
+![student profile Screenshot](screenshots/final/student.png)
 
 # APIs/URL Routes
 
