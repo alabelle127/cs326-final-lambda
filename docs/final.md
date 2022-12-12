@@ -1,11 +1,66 @@
 # Team Lambda: Study Buddies (Fall 2022 Semester)
-# Overview 
-Study Buddies is a web application to help UMass student find partners to study with. In which students can create accounts to fill out with current courses and previous courses they have taken to match with other students using our algorithm to guarantee relavant students can find each other. after finding other students you have the ability to invite them and create a study group and set up times to study for your courses. And if you are feeling particularly adventurousyou can even look for individual students if you happen to know their id, but only if they allow it since we should respect one anothers privacy. you can also just browse for a group thats already been formed with our very own group finder.  
+
+# Overview
+
+Study Buddies is a web application to help UMass student find partners to study with. In which students can create accounts to fill out with current courses and previous courses they have taken to match with other students using our algorithm to guarantee relavant students can find each other. after finding other students you have the ability to invite them and create a study group and set up times to study for your courses. And if you are feeling particularly adventurousyou can even look for individual students if you happen to know their id, but only if they allow it since we should respect one anothers privacy. you can also just browse for a group thats already been formed with our very own group finder.
+
 # Team Members
--   Andrew LaBelle ([https://github.com/alabelle127](https://github.com/alabelle127))
--   Gavin Cho ([https://github.com/gavin-k-cho](https://github.com/gavin-k-cho))
--   Chris Manning ([https://github.com/KaenCS](https://github.com/KaenCS))
-# User Interface (TODO)
+
+- Andrew LaBelle ([https://github.com/alabelle127](https://github.com/alabelle127))
+- Gavin Cho ([https://github.com/gavin-k-cho](https://github.com/gavin-k-cho))
+- Chris Manning ([https://github.com/KaenCS](https://github.com/KaenCS))
+
+# User Interface
+
+## Homepage
+
+Landing page for new users to the website.
+
+![homepage screenshot](screenshots/final/home.png)
+
+## Navbar
+
+Allow user to navigate between pages.
+
+![navbar logged out screenshot](screenshots/final/navbar_logged_out.png)
+![navbar screenshot](screenshots/final/navbar.png)
+
+## Login
+
+Allow user to log in to their account.
+
+![login screenshot](screenshots/final/login.png)
+
+## Register
+
+Create a new user.
+
+![register 1/3 screenshot](screenshots/final/register_1.png)
+![register 2/3 screenshot](screenshots/final/register_2.png)
+![register 3/3 screenshot](screenshots/final/register_3.png)
+
+## Class Add/Remove
+
+Edit currently taken classes.
+
+![class edit screenshot](screenshots/final/class_edit.png)
+
+## Class Search
+
+Search for a class to add.
+
+![class search screenshot](screenshots/final/class_search.png)
+
+## Account Settings
+
+Change user settings.
+
+![settings screenshot](screenshots/final/settings.png)
+
+## Partner Finder (TODO)
+
+## User Profile (TODO)
+
 # APIs/URL Routes
 
 ## Search
@@ -362,9 +417,7 @@ Get user data. If the user has a private profile and the requested user is not s
     "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
     "private_profile": false,
     "looking_for_partners": true,
-    "currentCourses": [
-      "6377da885a9fa1629b0b3447"
-    ],
+    "currentCourses": ["6377da885a9fa1629b0b3447"]
   }
 }
 ```
@@ -378,7 +431,7 @@ Get user data. If the user has a private profile and the requested user is not s
   "success": true,
   "data": {
     "username": "gavin",
-    "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
+    "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png"
   }
 }
 ```
@@ -406,11 +459,11 @@ Set user data. Requested user must be self.
 
 ```json
 {
-    "profile_picture": "[URL]",
-    "description": "[string]",
-    "contact": "[string]",
-    "looking_for_partners": "[boolean]",
-    "private_profile": "[boolean]"
+  "profile_picture": "[URL]",
+  "description": "[string]",
+  "contact": "[string]",
+  "looking_for_partners": "[boolean]",
+  "private_profile": "[boolean]"
 }
 ```
 
@@ -434,6 +487,7 @@ Set user data. Requested user must be self.
   "message": "Not authorized"
 }
 ```
+
 ## Get Google authentication URL
 
 Get URL which allows user to login to their Google account so that a calendar can be created with their class schedule. After a user logs in, redirects to `/api/google_auth`.
@@ -448,7 +502,7 @@ Get URL which allows user to login to their Google account so that a calendar ca
 
 ```json
 {
-  "url": "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&client_id=(redacted)&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fgoogle_auth&service=lso&o2v=2&flowName=GeneralOAuthFlow" 
+  "url": "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&response_type=code&client_id=(redacted)&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fapi%2Fgoogle_auth&service=lso&o2v=2&flowName=GeneralOAuthFlow"
 }
 ```
 
@@ -461,7 +515,7 @@ Get URL which allows user to login to their Google account so that a calendar ca
   "success": true,
   "data": {
     "username": "gavin",
-    "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
+    "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png"
   }
 }
 ```
@@ -476,14 +530,23 @@ Get URL which allows user to login to their Google account so that a calendar ca
   "message": "Student does not exist"
 }
 ```
+
 ## List of Compatible Partners (TODO)
+
 ## Return Incoming Matches for User (TODO)
+
 ## Sending Match request from user 1 to user 2 (TODO)
+
 ## Meeting Scheduling (TODO)
+
 ## Incoming Notifications/Match requests (TODO)
+
 ## User's Current Meetings (TODO)
+
 # Database
+
 ## 2022 Fall Classes Collection
+
 UMass Fall 2022 semester classes, scraped from SPIRE.
 
 **Example document**
@@ -536,7 +599,9 @@ UMass Fall 2022 semester classes, scraped from SPIRE.
   "room": "Dickinson Hall room 216"
 }
 ```
+
 ## Members Collection
+
 Registered users.
 
 **Example document**
@@ -555,9 +620,7 @@ Registered users.
   "profile_picture": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/512px-Circle-icons-profile.svg.png",
   "private_profile": false,
   "looking_for_partners": true,
-  "classes": [
-    "6377da885a9fa1629b0b3447"
-  ],
+  "classes": ["6377da885a9fa1629b0b3447"],
   "google_credentials": {
     "access_token": "(redacted)",
     "refresh_token": "(redacted)",
@@ -569,7 +632,9 @@ Registered users.
   }
 }
 ```
+
 ## Session Collection
+
 Currently logged in user sessions.
 
 **Example document**
@@ -585,7 +650,9 @@ Currently logged in user sessions.
   "session": "{\"cookie\":{\"originalMaxAge\":604800000,\"expires\":\"2022-12-17T00:44:18.835Z\",\"httpOnly\":true,\"path\":\"/\"},\"userID\":\"6393d654edc7c4e145be02e7\"}"
 }
 ```
+
 ## Matches Collection
+
 ```json
 {
   "_id": "ObjectId('637982c7c929c60f93db065a')"
@@ -593,7 +660,9 @@ Currently logged in user sessions.
   "user2": "mark"
 },
 ```
+
 ## Meetings Collection
+
 ```json
 {
   "_id": "ObjectId('637acb1b05189442bf844bb5')"
@@ -618,7 +687,9 @@ Currently logged in user sessions.
       "0": "Object"
 },
 ```
+
 ## Notifications Collection
+
 ```json
 {
   "_id": "ObjectId('63798e380d2cb3075765f4dc')"
@@ -628,10 +699,15 @@ Currently logged in user sessions.
     "1": "MathMajor456"
 },
 ```
+
 # Authentication/Authorization
+
 Authentication for login is implemented with the miniCrypt.js library (ported to TypeScript), generally following the example provided from class. When a user is logged in a session is created in the database so if a user leaves the page and comes back they will still be logged in. The session is used to check what logged in user is making an API request. So sensitive API calls such as changing a user's profile picture only succeed if the user making the request is the same as the user whose profile picture is being changed. When viewing a user's profile, if the user has a private profile and the viewer is not the user itself, only the user's username and profile picture will be visible. No user has more permissions than any other user.
+
 # Division of Labor
+
 **Gavin:**
+
 - User login (wireframes, frontend, and backend)
 - Register new user (wireframes, frontend, and backend)
 - Add/remove/search classes (wireframes, frontend, and backend)
@@ -640,7 +716,8 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 
 **Andrew: TODO**
 
-**Chris:
+\*\*Chris:
+
 - Created and maintained MongoDB database
 - Created and maintained the Heroku App (recently had to transfer ownership to Gavin for dynos)
 - Student (wireframes, frontend, and backend)
