@@ -62,8 +62,24 @@ getLoggedInUser().then(async (student) => {
 
   r.json().then(async (info) => {
     studentData = info.data;
-    studentPrevCourses = info.data["previousCourses"];
+    // studentPrevCourses = info.data["previousCourses"];
     studentCurrCourses = info.data["currentCourses"];
+
+    const classes_url = `/api/users/${target}/registered_classes`;
+    const classes_r = await fetch(classes_url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    });
+
+    const classes = (await classes_r.json()).data ?? [];
+
+    for (const c in classes) {
+      classes[c] = getClassData(classes[c]);
+    }
+
+    studentPrevCourses = classes;
 
     console.log(studentData);
     console.log("break");
@@ -73,3 +89,11 @@ getLoggedInUser().then(async (student) => {
     setDataFields(studentData, studentPrevCourses, studentCurrCourses);
   });
 });
+
+function getClassData(class_object) {
+  const id = class_object["class"]["subject"]["id"];
+  const number = class_object["class"]["number"];
+  const name = class_object["class"]["name"];
+
+  return `${id} ${number}: ${name}`;
+}
