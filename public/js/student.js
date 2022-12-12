@@ -26,7 +26,7 @@ function getStudentData(student) {
   };
 }
 
-function setDataFields(data, previousCourses, currentCourses, thePartners) {
+function setDataFields(data, previousCourses, currentCourses) {
   nameField.innerHTML = `<br /><br />
                             <h3>Name:</h3>
                             <h3>${data.real_name}</h3>`;
@@ -46,10 +46,6 @@ function setDataFields(data, previousCourses, currentCourses, thePartners) {
     for (const c in currentCourses) {
       currentCoursesField.innerHTML += `<li>${currentCourses[c]}</li>`;
     }
-  }
-
-  for (const c in thePartners) {
-    partnersField.innerHTML += `<li>${thePartners[c]}</li>`;
   }
 
   if (data.profile_picture !== undefined && data.profile_picture !== null) {
@@ -79,20 +75,6 @@ getLoggedInUser().then(async (student) => {
     for (const c in currClasses) {
       currClasses[c] = getClassData(currClasses[c]);
     }
-
-    const purl = `/api/users/${target}/compatible_partners`;
-    const parts = await fetch(purl, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    });
-
-    
-    const partners = document.getElementById("partners");
-    const compatible_users = (await r.json()).data ?? [];
-    
-    console.log(compatible_users);
 
     studentCurrCourses = currClasses;
     
