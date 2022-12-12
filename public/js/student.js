@@ -72,20 +72,22 @@ getLoggedInUser().then(async (student) => {
       }
     });
 
-    const classes = (await classes_r.json()).data ?? [];
+    const currClasses = (await classes_r.json()).data ?? [];
 
-    for (const c in classes) {
-      classes[c] = getClassData(classes[c]);
+    for (const c in currClasses) {
+      currClasses[c] = getClassData(currClasses[c]);
+
     }
 
-    studentCurrCourses = classes;
+    studentCurrCourses = currClasses;
 
     console.log(studentData);
+    console.log(currClasses);
     console.log("break");
     console.log(studentCurrCourses);
     console.log(studentPrevCourses);
 
-    setDataFields(studentData, studentPrevCourses, studentCurrCourses);
+    setDataFields(studentData, studentPrevCourses, currClasses);
   });
 });
 
