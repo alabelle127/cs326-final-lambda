@@ -25,7 +25,7 @@ function getStudentData(student) {
   };
 }
 
-function setDataFields(data) {
+function setDataFields(data, previousCourses, currentCourses) {
   nameField.innerHTML = `<br /><br />
                             <h3>Name:</h3>
                             <h3>${data.real_name}</h3>`;
@@ -35,13 +35,13 @@ function setDataFields(data) {
   contactField.innerHTML = `Contact Information: <br> ${data.contact_info}`;
 
   previousCoursesField.innerHTML = "";
-  for (const c in data.previousCourses) {
-    previousCoursesField.innerHTML += `<li>${data.previousCourses[c]}</li>`;
+  for (const c in previousCourses) {
+    previousCoursesField.innerHTML += `<li>${previousCourses[c]}</li>`;
   }
 
   currentCoursesField.innerHTML = "";
   if (data.currentCourses !== undefined) {
-    for (const c in data.currentCourses) {
+    for (const c in currentCourses) {
       currentCoursesField.innerHTML += `<li>${data.currentCourses[c]}</li>`;
     }
   }
@@ -63,7 +63,6 @@ getLoggedInUser().then(async (student) => {
   r.json().then(async (info) => {
     studentData = info.data;
     studentPrevCourses = info.data["previousCourses"];
-    // studentCurrCourses = info.data["currentCourses"];
 
     const classes_url = `/api/users/${target}/registered_classes`;
     const classes_r = await fetch(classes_url, {
