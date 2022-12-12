@@ -716,6 +716,10 @@ Authentication for login is implemented with the miniCrypt.js library (ported to
 
 **Andrew: TODO**
 
+- Student Finder Page (wireframes, frontend, backend)
+- Allows users to match with other users via invite link on finder page for each user (frontend and backend)
+- Allows users to view other users profiles via link on their section in the finder page
+
 \*\*Chris:
 
 - Created and maintained MongoDB database
