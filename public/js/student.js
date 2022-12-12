@@ -65,6 +65,11 @@ getLoggedInUser().then(async (student) => {
     studentPrevCourses = info.data["previousCourses"];
     studentCurrCourses = info.data["currentCourses"];
 
+    console.log(studentData);
+    console.log("break");
+    console.log(studentCurrCourses);
+    console.log(studentPrevCourses);
+
     setDataFields(studentData, studentPrevCourses, studentCurrCourses);
   });
 });
