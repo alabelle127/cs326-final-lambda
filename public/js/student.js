@@ -62,8 +62,8 @@ getLoggedInUser().then(async (student) => {
 
   r.json().then(async (info) => {
     studentData = info.data;
-    // studentPrevCourses = info.data["previousCourses"];
-    studentCurrCourses = info.data["currentCourses"];
+    studentPrevCourses = info.data["previousCourses"];
+    // studentCurrCourses = info.data["currentCourses"];
 
     const classes_url = `/api/users/${target}/registered_classes`;
     const classes_r = await fetch(classes_url, {
@@ -79,7 +79,7 @@ getLoggedInUser().then(async (student) => {
       classes[c] = getClassData(classes[c]);
     }
 
-    studentPrevCourses = classes;
+    studentCurrCourses = classes;
 
     console.log(studentData);
     console.log("break");
