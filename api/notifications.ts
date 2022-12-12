@@ -98,9 +98,6 @@ export async function send_meeting_request(req: Request, res: Response) {
   const userID1 = req.params.userID1;
   const userID2 = req.params.userID2;
 
-  // const from = req.body.from;
-  // const to = req.body.to;
-
   const client = req.app.locals.client;
 
   let entry1;
